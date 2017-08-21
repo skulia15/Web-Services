@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using wepo.Models;
 
 namespace wepo.Controllers {
-        //[Route("api/courses")]
+        [Route("api/courses")]
         public class CourseController : Controller {
 
             // Note: the variable is static such that the data will persist during
@@ -37,19 +37,25 @@ namespace wepo.Controllers {
 
                 // GET api/courses
                 [HttpGet]
-                [Route ("api/courses")]
+                [Route ("")]
                 public IActionResult GetCourses () {
                     return Ok (_courses);
                 }
 
                 // GET api/courses/5
-                [HttpGet ("{id}")]
-                public string Get (int id) {
-                    return "value";
+                [HttpGet]
+                [Route("{courseID}")]
+                public IActionResult GetCourseByID (int courseID) {
+                    var result = _courses.Where(x => x.ID == courseID).SingleOrDefault();
+                    if(result == null){
+                        return NotFound();
+                    }
+                    return Ok(result);
                 }
 
                 // POST api/values
                 [HttpPost]
+                [Route("")]
                 public void Post ([FromBody] string value) { }
 
                 // PUT api/values/5
