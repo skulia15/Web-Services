@@ -1,0 +1,10 @@
+C:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\wepo\bin\Debug\netcoreapp2.0\wepo.deps.json
+C:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\wepo\bin\Debug\netcoreapp2.0\wepo.runtimeconfig.json
+C:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\wepo\bin\Debug\netcoreapp2.0\wepo.runtimeconfig.dev.json
+C:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\wepo\bin\Debug\netcoreapp2.0\wepo.dll
+C:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\wepo\bin\Debug\netcoreapp2.0\wepo.pdb
+C:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\wepo\obj\Debug\netcoreapp2.0\wepo.csproj.CoreCompileInputs.cache
+C:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\wepo\obj\Debug\netcoreapp2.0\wepo.AssemblyInfoInputs.cache
+C:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\wepo\obj\Debug\netcoreapp2.0\wepo.AssemblyInfo.cs
+C:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\wepo\obj\Debug\netcoreapp2.0\wepo.dll
+C:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\wepo\obj\Debug\netcoreapp2.0\wepo.pdb
