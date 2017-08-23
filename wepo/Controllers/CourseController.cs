@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using wepo.Models;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace wepo.Controllers {
         [Route("api/courses")]
@@ -56,14 +58,54 @@ namespace wepo.Controllers {
                 // POST api/values
                 [HttpPost]
                 [Route("")]
-                public void Post ([FromBody] string value) { }
+                public IActionResult CreateCourse ([FromBody] Course newCourse) {
 
+                    if(newCourse == null){
+                        return BadRequest();
+                    }
+                    //Validate the new course to add
+                    
+                    if(TryValidateModel(newCourse) == false){
+                        return StatusCode(412);
+                    }
+                    //Check for duplicates in the list
+                    var courseExists = _courses.Where(x => x.ID == newCourse.ID);
+                    if (courseExists == null){
+                        //duplicate exists
+                        return StatusCode(422);
+                    }
+                    _courses.Add(newCourse);
+                    int courseID = newCourse.ID;
+                    return Created("api/courses/{courseID}", newCourse);
+
+                }
+
+                //Update a course
                 // PUT api/values/5
-                [HttpPut ("{id}")]
-                public void Put (int id, [FromBody] string value) { }
+                [HttpPut ("{CourseID}")]
+                public IActionResult updateCourse (int courseID, [FromBody] Course updatedCourse) {
+                    //Find the course to update
+                    var oldCourse = _courses.Where(x => x.ID == courseID).SingleOrDefault();
+                    if(oldCourse == null){
+                        return NotFound();
+                    }
+                    //Validate updated course here
+
+                    _courses.Remove(oldCourse);
+                    _courses.Add(updatedCourse);
+
+                    return Ok();
+                }
 
                 // DELETE api/values/5
-                [HttpDelete ("{id}")]
-                public void Delete (int id) { }
+                [HttpDelete ("{courseID}")]
+                public IActionResult Delete (int courseID) { 
+                    var removeCourse = _courses.Where(x => x.ID == courseID).SingleOrDefault();
+                    if(removeCourse == null){
+                        return NotFound();
+                    }
+                    _courses.Remove(removeCourse);
+                    return NoContent();
+                }
             }
         }
