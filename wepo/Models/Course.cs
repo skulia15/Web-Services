@@ -19,6 +19,6 @@ namespace wepo.Models {
         // Example: 2016-11-08)
         public System.DateTime endDate { get; set; }
         // List of students registered in a particular course
-        public List<Student> Students { get; set; }
+        public List<Student> studentList { get; set; }
     }
 }

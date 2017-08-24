@@ -12539,11 +12539,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Skúli\\Háskólinn í Reykjavík\\Vefþjónustur\\wepo\\wepo.csproj",
+      "projectUniqueName": "C:\\Skúli\\Háskólinn í Reykjavík\\Vefþjónustur\\wepo\\wepo.csproj",
       "projectName": "wepo",
-      "projectPath": "c:\\Skúli\\Háskólinn í Reykjavík\\Vefþjónustur\\wepo\\wepo.csproj",
+      "projectPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Vefþjónustur\\wepo\\wepo.csproj",
       "packagesPath": "C:\\Users\\Skúli\\.nuget\\packages\\",
-      "outputPath": "c:\\Skúli\\Háskólinn í Reykjavík\\Vefþjónustur\\wepo\\obj\\",
+      "outputPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Vefþjónustur\\wepo\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
