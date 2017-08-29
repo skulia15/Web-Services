@@ -1,0 +1,14 @@
+c:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\SchoolAPI\API\bin\Debug\netcoreapp2.0\API.deps.json
+c:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\SchoolAPI\API\bin\Debug\netcoreapp2.0\API.runtimeconfig.json
+c:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\SchoolAPI\API\bin\Debug\netcoreapp2.0\API.runtimeconfig.dev.json
+c:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\SchoolAPI\API\bin\Debug\netcoreapp2.0\API.dll
+c:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\SchoolAPI\API\bin\Debug\netcoreapp2.0\API.pdb
+c:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\SchoolAPI\API\obj\Debug\netcoreapp2.0\API.csproj.CoreCompileInputs.cache
+c:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\SchoolAPI\API\obj\Debug\netcoreapp2.0\API.AssemblyInfoInputs.cache
+c:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\SchoolAPI\API\obj\Debug\netcoreapp2.0\API.AssemblyInfo.cs
+c:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\SchoolAPI\API\obj\Debug\netcoreapp2.0\API.dll
+c:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\SchoolAPI\API\obj\Debug\netcoreapp2.0\API.pdb
+C:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\SchoolAPI\API\bin\Debug\netcoreapp2.0\Models.dll
+C:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\SchoolAPI\API\bin\Debug\netcoreapp2.0\Services.dll
+C:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\SchoolAPI\API\bin\Debug\netcoreapp2.0\Services.pdb
+C:\Skúli\Háskólinn í Reykjavík\Vefþjónustur\SchoolAPI\API\bin\Debug\netcoreapp2.0\Models.pdb
