@@ -6,13 +6,13 @@ using CoursesAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers {
-    [Route ("api/[controller]")]
+    [Route ("api/courses")]
     public class CoursesController : Controller {
         private readonly ICoursesService _coursesService;
         public CoursesController(ICoursesService coursesService){
             _coursesService = coursesService;
         }
-        // GET api/values
+        // GET api/Courses
         [HttpGet]
         public IActionResult GetCourses () {
             var courses = _coursesService.GetCourses();

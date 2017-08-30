@@ -6,6 +6,7 @@ using CoursesAPI.Repositories;
 using CoursesAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -28,6 +29,8 @@ namespace API
             services.AddMvc();
             services.AddTransient<ICoursesRepository, CoursesRepository>();
             services.AddTransient<ICoursesService, CoursesServices>();
+            services.AddDbContext<AppDataContext>(options =>
+                options.UseSqlite("Data Source=../Repositories/CourseAPI.db", b => b.MigrationsAssembly("API")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
