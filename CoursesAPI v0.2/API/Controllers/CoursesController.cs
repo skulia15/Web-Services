@@ -19,5 +19,16 @@ namespace API.Controllers {
             return Ok(courses);
         }
 
+        // GET api/Courses/1
+        [HttpGet ("{courseID:int}", Name = "GetCourseByID")]
+        public IActionResult GetCourseByID (int courseID) {
+            var course = _coursesService.GetCourseByID(courseID);
+            if(course == null){
+                return NotFound();
+            }
+            return Ok(course);
+        }
+
+
     }
 }

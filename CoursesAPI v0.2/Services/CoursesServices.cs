@@ -12,5 +12,12 @@ namespace CoursesAPI.Services {
             var courses = _repo.GetCourses();
             return courses;
         }
+
+        public CoursesDTO GetCourseByID (int ID){
+            var courses = _repo.GetCourseByID(ID);
+            return courses;
+        }
+
+
     }
 }

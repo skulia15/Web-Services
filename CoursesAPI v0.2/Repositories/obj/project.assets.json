@@ -2707,11 +2707,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Skúli\\Háskólinn í Reykjavík\\Vefþjónustur\\CoursesAPI v0.2\\Repositories\\Repositories.csproj",
+      "projectUniqueName": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPI v0.2\\Repositories\\Repositories.csproj",
       "projectName": "Repositories",
-      "projectPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Vefþjónustur\\CoursesAPI v0.2\\Repositories\\Repositories.csproj",
+      "projectPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPI v0.2\\Repositories\\Repositories.csproj",
       "packagesPath": "C:\\Users\\Skúli\\.nuget\\packages\\",
-      "outputPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Vefþjónustur\\CoursesAPI v0.2\\Repositories\\obj\\",
+      "outputPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPI v0.2\\Repositories\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -2728,8 +2728,8 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "C:\\Skúli\\Háskólinn í Reykjavík\\Vefþjónustur\\CoursesAPI v0.2\\Models\\Models.csproj": {
-              "projectPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Vefþjónustur\\CoursesAPI v0.2\\Models\\Models.csproj"
+            "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPI v0.2\\Models\\Models.csproj": {
+              "projectPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPI v0.2\\Models\\Models.csproj"
             }
           }
         }

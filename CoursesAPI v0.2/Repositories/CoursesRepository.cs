@@ -18,5 +18,16 @@ namespace CoursesAPI.Repositories {
                             }).ToList ();
             return courses;
         }
+        public CoursesDTO GetCourseByID(int ID){
+            var courseDTO = (from c in _db.Courses 
+                            where c.ID == ID
+                            select new CoursesDTO {
+                            ID = c.ID,
+                            name = c.name
+                            }).SingleOrDefault();
+            
+            // If not found???
+            return courseDTO;
+        }
     }
 }
