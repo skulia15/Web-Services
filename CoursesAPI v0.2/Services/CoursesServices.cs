@@ -43,5 +43,14 @@ namespace CoursesAPI.Services {
              }
              return false;
         }
+
+        public List<StudentsDTO> GetStudentsInCourse(int courseID)
+        {
+            var students = _repo.GetStudentsInCourse(courseID);
+            if(students == null){
+                return null;
+            }
+            return students;
+        }
     }
 }

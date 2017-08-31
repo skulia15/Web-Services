@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CoursesAPI.Models.DTOModels;
+using CoursesAPI.Models.EntityModels;
 using CoursesAPI.Models.ViewModels;
 
 namespace CoursesAPI.Repositories {
@@ -71,6 +72,18 @@ namespace CoursesAPI.Repositories {
             _db.Courses.Remove(delCourse);
             _db.SaveChanges();
             return true;
+        }
+
+        public List<StudentsDTO> GetStudentsInCourse(int courseID)
+        {
+            var students = (from s in _db.Students
+                            join sc in _db.StudentCourses on s.ID equals sc.studentID
+                            where sc.courseID == courseID
+                            select new StudentsDTO{
+                                ssn = s.ssn,
+                                name = s.name
+                            }).ToList();
+            return students;
         }
     }
 }

@@ -9,5 +9,6 @@ namespace CoursesAPI.Services {
         CoursesDTO GetCourseByID(int courseID);
         CoursesDTO UpdateCourse(int courseID, CourseViewModel updatedCourse);
         bool DeleteCourse(int courseID);
+        List<StudentsDTO> GetStudentsInCourse(int courseID);
     }
 }

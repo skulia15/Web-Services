@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoursesAPI.Models.DTOModels;
 using CoursesAPI.Models.ViewModels;
 using CoursesAPI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +31,16 @@ namespace API.Controllers {
             return Ok(course);
         }
 
+        // GET api/courses/1/students
+         [HttpGet ("{courseID:int}/students", Name = "GetStudentsInCourse")]
+        public IActionResult GetStudentsInCourse (int courseID) {
+            var students = _coursesService.GetStudentsInCourse(courseID);
+            if(students == null){
+                return NotFound();
+            }
+            return Ok(students);
+        }
+
          // PUT api/courses/1
         [HttpPut ("{courseID:int}", Name = "UpdateCourse")]
         public IActionResult UpdateCourse (int courseID, [FromBody] CourseViewModel updatedCourse) {
@@ -51,10 +62,7 @@ namespace API.Controllers {
                 return NoContent();
             }
             // Success?
-
             return NotFound();
         }
-
-
     }
 }

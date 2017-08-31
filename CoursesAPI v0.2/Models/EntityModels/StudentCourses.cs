@@ -1,0 +1,7 @@
+namespace CoursesAPI.Models.EntityModels {
+    public class StudentCourses {
+        public int ID { get; set; }
+        public int studentID { get; set; }
+        public int courseID { get; set; }
+    }
+}

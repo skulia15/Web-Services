@@ -8,5 +8,6 @@ namespace CoursesAPI.Repositories {
         CoursesDTO GetCourseByID(int ID);
         CoursesDTO UpdateCourse(int courseID, CourseViewModel updatedCourse);
         bool DeleteCourse(int courseID);
+        List<StudentsDTO> GetStudentsInCourse(int courseID);
     }
 }
