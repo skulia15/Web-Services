@@ -12,5 +12,10 @@ namespace CoursesAPI.Models.EntityModels {
         public System.DateTime endDate { get; set; }
         // List of students registered in a particular course
         //public List<Student> studentList { get; set; }
+        
+        // example: "20171"represents spring 2017, "20172"
+        // represents summer 2017 and "20173" represents fall 2017
+        public string semester { get; set; }
+
     }
 }

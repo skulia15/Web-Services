@@ -10,11 +10,14 @@ namespace CoursesAPI.Repositories {
         public CoursesRepository (AppDataContext db) {
             _db = db;
         }
+        // If no semester is provided in the query (i.e. /api/courses), the current semester should be used
         public IEnumerable<CoursesDTO> GetCourses () {
             var courses = (from c in _db.Courses 
+                            where c.semester.EndsWith("3")
                             select new CoursesDTO {
                             ID = c.ID,
-                            name = c.name
+                            name = c.name,
+                            templateID = c.templateID
                             }).ToList ();
             return courses;
         }
@@ -23,7 +26,8 @@ namespace CoursesAPI.Repositories {
                             where c.ID == ID
                             select new CoursesDTO {
                             ID = c.ID,
-                            name = c.name
+                            name = c.name,
+                            templateID = c.templateID
                             }).SingleOrDefault();
             
             // If not found???
