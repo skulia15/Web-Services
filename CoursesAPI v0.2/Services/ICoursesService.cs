@@ -4,7 +4,7 @@ using CoursesAPI.Models.DTOModels;
 
 namespace CoursesAPI.Services {
     public interface ICoursesService {
-        IEnumerable<CoursesDTO> GetCourses ();
+        IEnumerable<CoursesDTO> GetCourses (string semester);
         CoursesDTO GetCourseByID(int courseID);
     }
 }

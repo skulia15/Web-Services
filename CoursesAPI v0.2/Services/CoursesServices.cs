@@ -8,8 +8,8 @@ namespace CoursesAPI.Services {
         public CoursesServices (ICoursesRepository repo) {
             _repo = repo;
         }
-        public IEnumerable<CoursesDTO> GetCourses () {
-            var courses = _repo.GetCourses();
+        public IEnumerable<CoursesDTO> GetCourses (string semester) {
+            var courses = _repo.GetCourses(semester);
             return courses;
         }
 
@@ -17,7 +17,5 @@ namespace CoursesAPI.Services {
             var courses = _repo.GetCourseByID(ID);
             return courses;
         }
-
-
     }
 }

@@ -11,9 +11,17 @@ namespace CoursesAPI.Repositories {
             _db = db;
         }
         // If no semester is provided in the query (i.e. /api/courses), the current semester should be used
-        public IEnumerable<CoursesDTO> GetCourses () {
+        public IEnumerable<CoursesDTO> GetCourses (string semester) {
+            string givenSemester;
+            if(semester == null){
+                givenSemester = "20173";
+            }
+            else{
+                givenSemester = semester;
+            }
+
             var courses = (from c in _db.Courses 
-                            where c.semester.EndsWith("3")
+                            where c.semester == givenSemester
                             select new CoursesDTO {
                             ID = c.ID,
                             name = c.name,

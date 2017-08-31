@@ -13,9 +13,9 @@ namespace API.Controllers {
             _coursesService = coursesService;
         }
         // GET api/Courses
-        [HttpGet]
-        public IActionResult GetCourses () {
-            var courses = _coursesService.GetCourses();
+        [HttpGet ("{semester?}")]
+        public IActionResult GetCourses (string semester) {
+            var courses = _coursesService.GetCourses(semester);
             return Ok(courses);
         }
 
