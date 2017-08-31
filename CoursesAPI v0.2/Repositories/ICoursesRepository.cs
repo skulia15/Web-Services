@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using CoursesAPI.Models.DTOModels;
-using CoursesAPI.Models.EntityModels;
+using CoursesAPI.Models.ViewModels;
 
 namespace CoursesAPI.Repositories {
     public interface ICoursesRepository {
         IEnumerable<CoursesDTO> GetCourses(string semester);
         CoursesDTO GetCourseByID(int ID);
-        CoursesDTO UpdateCourse(int courseID, CourseTemplate updatedCourse);
+        CoursesDTO UpdateCourse(int courseID, CourseViewModel updatedCourse);
+        bool DeleteCourse(int courseID);
     }
 }

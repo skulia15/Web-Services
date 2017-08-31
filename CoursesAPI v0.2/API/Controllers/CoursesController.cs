@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CoursesAPI.Models.EntityModels;
+using CoursesAPI.Models.ViewModels;
 using CoursesAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +20,7 @@ namespace API.Controllers {
             return Ok(courses);
         }
 
-        // GET api/Courses/1
+        // GET api/courses/1
         [HttpGet ("{courseID:int}", Name = "GetCourseByID")]
         public IActionResult GetCourseByID (int courseID) {
             var course = _coursesService.GetCourseByID(courseID);
@@ -30,12 +30,29 @@ namespace API.Controllers {
             return Ok(course);
         }
 
-         // PUT api/Courses/1
+         // PUT api/courses/1
         [HttpPut ("{courseID:int}", Name = "UpdateCourse")]
-        public IActionResult UpdateCourse (int courseID, [FromBody] CourseTemplate updatedCourse) {
+        public IActionResult UpdateCourse (int courseID, [FromBody] CourseViewModel updatedCourse) {
+            if(!ModelState.IsValid){
+                return StatusCode(412);
+            }
             var course = _coursesService.UpdateCourse(courseID, updatedCourse);
+            if(course == null){
+                return NotFound();
+            }
             //error check here
             return Ok(course);
+        }
+
+         // DELETE api/courses/1
+        [HttpDelete ("{courseID:int}", Name = "UpdateCourse")]
+        public IActionResult DeleteCourse (int courseID) {
+            if(_coursesService.DeleteCourse(courseID)){
+                return NoContent();
+            }
+            // Success?
+
+            return NotFound();
         }
 
 
