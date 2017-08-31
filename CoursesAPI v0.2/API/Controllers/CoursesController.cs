@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoursesAPI.Models.EntityModels;
 using CoursesAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +13,7 @@ namespace API.Controllers {
         public CoursesController(ICoursesService coursesService){
             _coursesService = coursesService;
         }
-        // GET api/Courses
+        // GET /api/courses?semester=20173
         [HttpGet ("{semester?}")]
         public IActionResult GetCourses (string semester) {
             var courses = _coursesService.GetCourses(semester);
@@ -26,6 +27,14 @@ namespace API.Controllers {
             if(course == null){
                 return NotFound();
             }
+            return Ok(course);
+        }
+
+         // PUT api/Courses/1
+        [HttpPut ("{courseID:int}", Name = "UpdateCourse")]
+        public IActionResult UpdateCourse (int courseID, [FromBody] CourseTemplate updatedCourse) {
+            var course = _coursesService.UpdateCourse(courseID, updatedCourse);
+            //error check here
             return Ok(course);
         }
 

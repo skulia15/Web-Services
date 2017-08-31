@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CoursesAPI.Models.DTOModels;
+using CoursesAPI.Models.EntityModels;
 using CoursesAPI.Repositories;
 
 namespace CoursesAPI.Services {
@@ -16,6 +17,11 @@ namespace CoursesAPI.Services {
         public CoursesDTO GetCourseByID (int ID){
             var courses = _repo.GetCourseByID(ID);
             return courses;
+        }
+        public CoursesDTO UpdateCourse(int courseID, CourseTemplate updatedCourse)
+        {
+            var course = _repo.UpdateCourse(courseID, updatedCourse);
+            return course;
         }
     }
 }

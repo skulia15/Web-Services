@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CoursesAPI.Models.DTOModels;
+using CoursesAPI.Models.EntityModels;
 
 namespace CoursesAPI.Repositories {
     public class CoursesRepository : ICoursesRepository {
@@ -25,7 +26,8 @@ namespace CoursesAPI.Repositories {
                             select new CoursesDTO {
                             ID = c.ID,
                             name = c.name,
-                            templateID = c.templateID
+                            templateID = c.templateID,
+                            semester = c.semester
                             }).ToList ();
             return courses;
         }
@@ -35,11 +37,38 @@ namespace CoursesAPI.Repositories {
                             select new CoursesDTO {
                             ID = c.ID,
                             name = c.name,
-                            templateID = c.templateID
+                            templateID = c.templateID,
+                            semester = c.semester
                             }).SingleOrDefault();
             
             // If not found???
             return courseDTO;
+        }
+
+        public CoursesDTO UpdateCourse(int courseID, CourseTemplate updatedCourse)
+        {
+            var course = (from c in _db.Courses 
+                            where c.templateID == updatedCourse.courseID
+                            && c.semester == updatedCourse.semester
+                            select c).SingleOrDefault();
+
+            course.startDate = updatedCourse.startDate;
+            course.endDate = updatedCourse.endDate;
+            
+            if(course == null){
+                return null;
+            }
+
+            _db.SaveChanges();
+
+            CoursesDTO DTO = new CoursesDTO(){
+                ID = course.ID,
+                templateID = course.templateID,
+                name = course.name,
+                semester = course.semester
+            };
+            // If not found???
+            return DTO;
         }
     }
 }
