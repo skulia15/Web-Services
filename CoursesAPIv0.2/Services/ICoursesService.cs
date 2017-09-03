@@ -11,6 +11,7 @@ namespace CoursesAPI.Services {
         CoursesDTO GetCourseByID(int courseID);
         CoursesDTO UpdateCourse(int courseID, CourseViewModel updatedCourse);
         bool DeleteCourse(int courseID);
+        bool AddStudentToCourse(int courseID,int studentID);
         List<StudentsDTO> GetStudentsInCourse(int courseID);
     }
 }

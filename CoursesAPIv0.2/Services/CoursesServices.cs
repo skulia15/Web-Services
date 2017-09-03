@@ -13,6 +13,8 @@ namespace CoursesAPI.Services {
         public CoursesServices (ICoursesRepository repo) {
             _repo = repo;
         }
+        //Gets the courses taught in the given semester.
+        //If invalid or no parameters are given returns the courses in the given semester
         public IEnumerable<CoursesDTO> GetCourses (string semester) {
             string givenSemester;
             if(semester == null){
@@ -25,10 +27,13 @@ namespace CoursesAPI.Services {
             return courses;
         }
 
+        // Returns a courseDTO with the corresponding courseID
         public CoursesDTO GetCourseByID (int ID) {
             var courses = _repo.GetCourseByID (ID);
             return courses;
         }
+        // Finds the course with the given courseID and 
+        // modifies the date values for that course
         public CoursesDTO UpdateCourse (int courseID, CourseViewModel updatedCourse) {
             //check if modelstate is valid
             var course = _repo.UpdateCourse (courseID, updatedCourse);
@@ -45,7 +50,8 @@ namespace CoursesAPI.Services {
              }
              return false;
         }
-
+        // Returns a list of studentsDTO's of all the students
+        // registered in that course. 
         public List<StudentsDTO> GetStudentsInCourse(int courseID)
         {
             var students = _repo.GetStudentsInCourse(courseID);
@@ -53,6 +59,21 @@ namespace CoursesAPI.Services {
                 return null;
             }
             return students;
+        }
+        // Checks if the course is valid, if so adds the students to
+        // that course by creating a new entry in the relational table studentCourses
+        public bool AddStudentToCourse(int courseID,int studentID)
+        {
+            if(GetCourseByID(courseID) == null)
+            {
+                return false;
+            }
+            bool addStudent = _repo.AddStudentToCourse(courseID,studentID);
+            if(addStudent)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

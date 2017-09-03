@@ -9,6 +9,7 @@ namespace CoursesAPI.Repositories {
         IEnumerable<CoursesDTO> GetCourses(string semester);
         CoursesDTO GetCourseByID(int ID);
         CoursesDTO UpdateCourse(int courseID, CourseViewModel updatedCourse);
+        bool AddStudentToCourse(int courseID,int studentID);
         bool DeleteCourse(int courseID);
         List<StudentsDTO> GetStudentsInCourse(int courseID);
     }

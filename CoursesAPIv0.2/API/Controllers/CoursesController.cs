@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CoursesAPI.Models.DTOModels;
+using CoursesAPI.Models.EntityModels;
 using CoursesAPI.Models.ViewModels;
 using CoursesAPI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -65,6 +66,17 @@ namespace API.Controllers {
             }
             // Success?
             return NotFound();
+        }
+        [HttpPost ("{courseID:int}/{studentID:int}")]
+        public IActionResult AddStudentToCourse(int courseID,int studentID)
+        {
+            
+            bool studentCourse = _coursesService.AddStudentToCourse(courseID,studentID);
+            if(!studentCourse)
+            {
+                return NotFound();
+            }
+            return Ok("Student added to the course");
         }
     }
 }
