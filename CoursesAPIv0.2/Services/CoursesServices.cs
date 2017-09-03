@@ -5,7 +5,7 @@ using CoursesAPI.Models.ViewModels;
 using CoursesAPI.Repositories;
 using System.ComponentModel.DataAnnotations;
 /// <summary>
-/// This class sends request to the courseRepo and returns apropriate information
+/// This class sends request to the courseRepo and returns appropriate information
 /// </summary>
 namespace CoursesAPI.Services {
     public class CoursesServices : ICoursesService {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,7 +6,9 @@ using CoursesAPI.Models.DTOModels;
 using CoursesAPI.Models.ViewModels;
 using CoursesAPI.Services;
 using Microsoft.AspNetCore.Mvc;
-
+/// <summary>
+/// Course controlle.
+/// </summary>
 namespace API.Controllers {
     [Route ("api/courses")]
     public class CoursesController : Controller {
