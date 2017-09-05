@@ -10,6 +10,6 @@ namespace CoursesAPI.Models.DTOModels {
         public string name { get; set; }
 
         public string semester { get; set; }
-        public int MaxStudents {get; set; }
+        public int maxStudents {get; set; }
     }
 }

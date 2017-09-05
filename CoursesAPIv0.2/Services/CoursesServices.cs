@@ -65,12 +65,24 @@ namespace CoursesAPI.Services {
         }
         // Checks if the course is valid, if so adds the students to
         // that course by creating a new entry in the relational table studentCourses
-        public bool AddStudentToCourse (int courseID, int studentID) {
+        public bool AddStudentToCourse (StudentViewModel newStudent,int courseID) {
             if (GetCourseByID (courseID) == null) {
                 return false;
             }
-            bool addStudent = _repo.AddStudentToCourse (courseID, studentID);
+            if(!CheckIfStudentExists(newStudent.studentID)){
+                return false;
+            }
+            bool addStudent = _repo.AddStudentToCourse (newStudent,courseID);
             if (addStudent) {
+                return true;
+            }
+            return false;
+        }
+        public bool CheckIfStudentExists(int studentID)
+        {
+            bool isHeThere =  _repo.CheckIfStudentExists(studentID);
+            if(isHeThere)
+            {
                 return true;
             }
             return false;
@@ -85,6 +97,17 @@ namespace CoursesAPI.Services {
             // Get the waiting list for the course
             List<StudentsDTO> waitingList = _repo.GetWaitingList(courseID);
             return waitingList;
+        }
+        public bool AddStudentToWaitingList(StudentViewModel newStudent,int courseId)
+        {
+            if (GetCourseByID (courseId) == null) {
+                return false;
+            }
+            if(!CheckIfStudentExists(newStudent.studentID)){
+                return false;
+            }
+            var added = _repo.AddStudentToWaitingList(newStudent,courseId);
+            return true;
         }
     }
 }

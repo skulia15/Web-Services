@@ -13,7 +13,9 @@ namespace CoursesAPI.Services {
 
         bool CreateCourse(CourseViewModel newCourse);
         bool DeleteCourse(int courseID);
-        bool AddStudentToCourse(int courseID,int studentID);
+        bool AddStudentToCourse(StudentViewModel newStudent,int courseID);
+        bool AddStudentToWaitingList(StudentViewModel newStudent,int courseId);
+        bool CheckIfStudentExists(int studentID);
         List<StudentsDTO> GetStudentsInCourse(int courseID);
         List<StudentsDTO> GetWaitingList(int courseID);
     }

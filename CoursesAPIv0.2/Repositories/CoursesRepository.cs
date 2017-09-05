@@ -58,7 +58,7 @@ namespace CoursesAPI.Repositories
 
             course.startDate = updatedCourse.startDate;
             course.endDate = updatedCourse.endDate;
-            course.MaxStudents = updatedCourse.MaxStudents;
+            course.maxStudents = updatedCourse.maxStudents;
 
             _db.SaveChanges();
 
@@ -79,11 +79,14 @@ namespace CoursesAPI.Repositories
                 semester = newCourse.semester,
                 startDate = newCourse.startDate,
                 endDate = newCourse.endDate,
-                MaxStudents = newCourse.MaxStudents
+                maxStudents = newCourse.maxStudents
             });
-            if(_db.SaveChanges() == 0){
-                return true;
-            }
+             try{
+                 _db.SaveChanges();
+             }
+             catch(Exception e){
+                 Console.WriteLine(e.Message);
+             }
             return false;
         }
 
@@ -114,9 +117,9 @@ namespace CoursesAPI.Repositories
                             }).ToList();
             return students;
         }
-        public bool AddStudentToCourse(int courseID, int studentID)
+        public bool AddStudentToCourse(StudentViewModel newStudent,int courseID)
         {
-            var students = _db.Students.First(x => x.ID == studentID);
+            var students = _db.Students.First(x => x.ID == newStudent.studentID);
 
             if (students == null)
             {
@@ -127,7 +130,7 @@ namespace CoursesAPI.Repositories
                 StudentCourses studentCourse = new StudentCourses
                 {
                     courseID = courseID,
-                    studentID = studentID
+                    studentID = newStudent.studentID
                 };
 
                 _db.StudentCourses.Add(studentCourse);
@@ -145,6 +148,35 @@ namespace CoursesAPI.Repositories
                                 name = s.name
                             }).ToList();
             return students;
+        }
+        public bool AddStudentToWaitingList(StudentViewModel newStudent,int courseId)
+        {
+
+            WaitingList waitingList = new WaitingList
+                {
+                    courseID = courseId,
+                    studentID = newStudent.studentID
+                };
+            _db.WaitingList.Add(waitingList);
+             try{
+                 _db.SaveChanges();
+             }
+             catch(Exception e){
+                 Console.WriteLine(e.Message);
+             }
+                return false;
+            
+ 
+        }
+        public bool CheckIfStudentExists(int studentID)
+        {
+            var students = _db.Students.FirstOrDefault(x => x.ID == studentID);
+            if(students == null)
+            {
+                return false;
+            }
+            return true;
+
         }
     }
 }

@@ -177,23 +177,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Skúli\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "/home/andri/.nuget/packages/": {},
+    "/usr/share/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPIv0.2\\Models\\Models.csproj",
+      "projectUniqueName": "/home/andri/Web-Services/CoursesAPIv0.2/Models/Models.csproj",
       "projectName": "Models",
-      "projectPath": "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPIv0.2\\Models\\Models.csproj",
-      "packagesPath": "C:\\Users\\Skúli\\.nuget\\packages\\",
-      "outputPath": "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPIv0.2\\Models\\obj\\",
+      "projectPath": "/home/andri/Web-Services/CoursesAPIv0.2/Models/Models.csproj",
+      "packagesPath": "/home/andri/.nuget/packages/",
+      "outputPath": "/home/andri/Web-Services/CoursesAPIv0.2/Models/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "/usr/share/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Skúli\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/andri/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.0"

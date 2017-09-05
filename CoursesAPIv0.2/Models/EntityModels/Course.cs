@@ -20,6 +20,6 @@ namespace CoursesAPI.Models.EntityModels {
         // represents summer 2017 and "20173" represents fall 2017
         public string semester { get; set; }
         // Indicates the maximum number of students that can be enrolled in a course
-        public int MaxStudents{ get; set; }
+        public int maxStudents{ get; set; }
     }
 }

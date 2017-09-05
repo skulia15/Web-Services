@@ -13,6 +13,6 @@ namespace CoursesAPI.Models.ViewModels
 
         public string semester { get; set; }
 
-        public int MaxStudents { get; set; }
+        public int maxStudents { get; set; }
     }
 }

@@ -83,11 +83,11 @@ namespace API.Controllers {
             // Success?
             return NotFound();
         }
-        [HttpPost ("{courseID:int}/{studentID:int}")]
-        public IActionResult AddStudentToCourse(int courseID,int studentID)
+        [HttpPost ("{courseID:int}/students")]
+        public IActionResult AddStudentToCourse([FromBody] StudentViewModel newStudent,int courseID)
         {
             
-            bool studentCourse = _coursesService.AddStudentToCourse(courseID,studentID);
+            bool studentCourse = _coursesService.AddStudentToCourse(newStudent,courseID);
             if(!studentCourse)
             {
                 return NotFound();
@@ -104,6 +104,14 @@ namespace API.Controllers {
             //Error handle
             //return 200
             return Ok();
+        }
+        
+        [HttpPost ("{courseId:int}/waitinglist")]
+        public IActionResult AddStudentToWaitingList([FromBody] StudentViewModel newStudent,int courseId)
+        {
+            bool addedToWaitingList = _coursesService.AddStudentToWaitingList(newStudent,courseId);
+            return Ok();
+
         }
     }
 }
