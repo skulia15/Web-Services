@@ -58,6 +58,7 @@ namespace CoursesAPI.Repositories
 
             course.startDate = updatedCourse.startDate;
             course.endDate = updatedCourse.endDate;
+            course.MaxStudents = updatedCourse.MaxStudents;
 
             _db.SaveChanges();
 
@@ -70,6 +71,20 @@ namespace CoursesAPI.Repositories
             };
             // If not found???
             return DTO;
+        }
+
+        public bool CreateCourse(CourseViewModel newCourse){
+            _db.Courses.Add(new Course{
+                templateID = newCourse.courseID,
+                semester = newCourse.semester,
+                startDate = newCourse.startDate,
+                endDate = newCourse.endDate,
+                MaxStudents = newCourse.MaxStudents
+            });
+            if(_db.SaveChanges() == 0){
+                return true;
+            }
+            return false;
         }
 
         public bool DeleteCourse(int courseID)
@@ -119,8 +134,17 @@ namespace CoursesAPI.Repositories
                 _db.SaveChanges();
                 return true;
             }
-
         }
-
+        public List<StudentsDTO> GetWaitingList(int courseID){
+            var students = (from s in _db.Students
+                            join wl in _db.WaitingList on s.ID equals wl.studentID
+                            where wl.courseID == courseID
+                            select new StudentsDTO
+                            {
+                                ssn = s.ssn,
+                                name = s.name
+                            }).ToList();
+            return students;
+        }
     }
 }

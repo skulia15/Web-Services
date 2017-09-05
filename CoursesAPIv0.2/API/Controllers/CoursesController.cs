@@ -58,6 +58,22 @@ namespace API.Controllers {
             return Ok(course);
         }
 
+        // PUT api/courses/1
+        [HttpPost ("", Name = "CreateCourse")]
+        public IActionResult CreateCourse ([FromBody] CourseViewModel newCourse) {
+            if(!ModelState.IsValid){
+                return StatusCode(412);
+            }
+            // Check if succeded
+            bool success = _coursesService.CreateCourse(newCourse);
+            if(!success){
+                return BadRequest();
+            }
+            
+            //error check here
+            return Ok();
+        }
+
          // DELETE api/courses/1
         [HttpDelete ("{courseID:int}", Name = "UpdateCourse")]
         public IActionResult DeleteCourse (int courseID) {
@@ -77,6 +93,17 @@ namespace API.Controllers {
                 return NotFound();
             }
             return Ok("Student added to the course");
+        }
+
+        // /api/courses/1/waitinglist
+        [HttpGet ("{courseID:int}/waitingList")]
+        public IActionResult GetWaitingList(int courseID)
+        {
+            
+            List<StudentsDTO> waitingList = _coursesService.GetWaitingList(courseID);
+            //Error handle
+            //return 200
+            return Ok();
         }
     }
 }

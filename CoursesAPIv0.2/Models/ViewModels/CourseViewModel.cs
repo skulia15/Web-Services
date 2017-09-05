@@ -12,5 +12,7 @@ namespace CoursesAPI.Models.ViewModels
         public System.DateTime endDate { get; set; }
 
         public string semester { get; set; }
+
+        public int MaxStudents { get; set; }
     }
 }

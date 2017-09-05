@@ -10,8 +10,11 @@ namespace CoursesAPI.Services {
         IEnumerable<CoursesDTO> GetCourses (string semester);
         CoursesDTO GetCourseByID(int courseID);
         CoursesDTO UpdateCourse(int courseID, CourseViewModel updatedCourse);
+
+        bool CreateCourse(CourseViewModel newCourse);
         bool DeleteCourse(int courseID);
         bool AddStudentToCourse(int courseID,int studentID);
         List<StudentsDTO> GetStudentsInCourse(int courseID);
+        List<StudentsDTO> GetWaitingList(int courseID);
     }
 }
