@@ -12590,23 +12590,23 @@
     ]
   },
   "packageFolders": {
-    "/home/andri/.nuget/packages/": {},
-    "/usr/share/dotnet/sdk/NuGetFallbackFolder": {}
+    "C:\\Users\\Skúli\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/andri/Web-Services/CoursesAPIv0.2/API/API.csproj",
+      "projectUniqueName": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPIv0.2\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "/home/andri/Web-Services/CoursesAPIv0.2/API/API.csproj",
-      "packagesPath": "/home/andri/.nuget/packages/",
-      "outputPath": "/home/andri/Web-Services/CoursesAPIv0.2/API/obj/",
+      "projectPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPIv0.2\\API\\API.csproj",
+      "packagesPath": "C:\\Users\\Skúli\\.nuget\\packages\\",
+      "outputPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPIv0.2\\API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "/home/andri/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Skúli\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.0"
@@ -12617,14 +12617,14 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "/home/andri/Web-Services/CoursesAPIv0.2/Models/Models.csproj": {
-              "projectPath": "/home/andri/Web-Services/CoursesAPIv0.2/Models/Models.csproj"
+            "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPIv0.2\\Models\\Models.csproj": {
+              "projectPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPIv0.2\\Models\\Models.csproj"
             },
-            "/home/andri/Web-Services/CoursesAPIv0.2/Services/Services.csproj": {
-              "projectPath": "/home/andri/Web-Services/CoursesAPIv0.2/Services/Services.csproj"
+            "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPIv0.2\\Services\\Services.csproj": {
+              "projectPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPIv0.2\\Services\\Services.csproj"
             },
-            "/home/andri/Web-Services/CoursesAPIv0.2/Repositories/Repositories.csproj": {
-              "projectPath": "/home/andri/Web-Services/CoursesAPIv0.2/Repositories/Repositories.csproj"
+            "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPIv0.2\\Repositories\\Repositories.csproj": {
+              "projectPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPIv0.2\\Repositories\\Repositories.csproj"
             }
           }
         }
