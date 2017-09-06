@@ -18,5 +18,6 @@ namespace CoursesAPI.Services {
         List<StudentsDTO> GetStudentsInCourse(int courseID);
         List<StudentsDTO> GetWaitingList(int courseID);
         bool canAddToCourse(int courseID);
+        bool removeFromWaitingList(int studentID, int courseID);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CoursesAPI.Models.DTOModels;
@@ -66,20 +67,29 @@ namespace CoursesAPI.Services {
         // Checks if the course is valid, if so adds the students to
         // that course by creating a new entry in the relational table studentCourses
         public bool AddStudentToCourse(StudentViewModel newStudent, int courseID) {
-            // Check if the course exists
-            if (GetCourseByID(courseID) == null) {
-                return false;
-            }
             // Check if the student exists
             if (!CheckIfStudentExists(newStudent.studentID)) {
                 return false;
             }
             // Check if the student is already registered in the course
             bool isRegistered = checkIfAlreadyRegistered(newStudent.studentID, courseID);
-
+            bool isWaiting = IsOnWaitingList(newStudent.studentID,courseID);
             // If student is already registered you cannot add him again
             if(isRegistered){
                 return false;
+            }
+            //check if the course id is indeed valid
+            if(GetCourseByID(courseID) == null)
+            {
+                return false;
+            }
+            if(isWaiting)
+            {
+                bool removed = removeFromWaitingList(newStudent.studentID,courseID);
+                if(!removed)
+                {
+                    return false;
+                }
             }
 
             // Add the student to the course
@@ -90,6 +100,17 @@ namespace CoursesAPI.Services {
             // Error adding student to the course
             return false;
         }
+
+        public bool removeFromWaitingList(int studentID, int courseID)
+        {
+            bool isGone = _repo.removeFromWaitingList(studentID,courseID);
+            if(isGone)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public bool CheckIfStudentExists(int studentID) {
             bool studentExists = _repo.CheckIfStudentExists(studentID);
             if (studentExists) {
@@ -109,6 +130,16 @@ namespace CoursesAPI.Services {
             // Get the waiting list for the course
             List<StudentsDTO> waitingList = _repo.GetWaitingList(courseID);
             return waitingList;
+        }
+        public bool IsOnWaitingList(int studentID,int courseID)
+        {
+            bool isWaiting = _repo.checkIfAlreadyOnWaitingList(studentID, courseID);
+            if (isWaiting) {
+                 return true;
+            }
+            return false;
+
+
         }
         public bool AddStudentToWaitingList(StudentViewModel newStudent, int courseId) {
             if (GetCourseByID(courseId) == null) {
@@ -145,5 +176,7 @@ namespace CoursesAPI.Services {
             }
             return false;
         }
+
+   
     }
 }

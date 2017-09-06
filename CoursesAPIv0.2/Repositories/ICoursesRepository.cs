@@ -19,5 +19,7 @@ namespace CoursesAPI.Repositories {
         int checkRegistered(int courseID);
         int getMaxInCourse(int courseID);
         bool checkIfAlreadyRegistered(int studentID, int courseID);
+        bool checkIfAlreadyOnWaitingList(int studentID, int courseID);
+        bool removeFromWaitingList(int studentID, int courseID);
     }
 }

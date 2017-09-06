@@ -163,5 +163,32 @@ namespace CoursesAPI.Repositories {
             }
             return true;
         }
+        public bool checkIfAlreadyOnWaitingList(int studentID, int courseID)
+        {
+            var isWaiting = (from wl in _db.WaitingList
+                                    where wl.studentID == studentID
+                                    && wl.courseID == courseID
+                                    select wl).SingleOrDefault();
+            if(isWaiting == null){
+                return false;
+            }
+            return true;
+        }
+
+        public bool removeFromWaitingList(int studentID, int courseID)
+        {
+            var remove = (from s in _db.WaitingList where s.studentID == studentID
+                                && s.courseID == courseID select s).SingleOrDefault();
+            if (remove == null) 
+            {
+                return false;
+            }
+
+            _db.WaitingList.Remove(remove);
+            _db.SaveChanges();
+            return true;
+
+
+        }
     }
 }
