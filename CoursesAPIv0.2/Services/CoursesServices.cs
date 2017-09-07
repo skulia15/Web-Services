@@ -50,6 +50,7 @@ namespace CoursesAPI.Services {
         }
 
         public bool DeleteCourse(int courseID) {
+
             if (_repo.DeleteCourse(courseID)) {
                 return true;
             }
@@ -116,11 +117,6 @@ namespace CoursesAPI.Services {
         }
 
         public List<StudentsDTO> GetWaitingList(int courseID) {
-            // If course is note found
-            var course = GetCourseByID(courseID);
-            if (course == null) {
-                return null;
-            }
             // Get the waiting list for the course
             List<StudentsDTO> waitingList = _repo.GetWaitingList(courseID);
             return waitingList;
@@ -133,30 +129,27 @@ namespace CoursesAPI.Services {
             return false;
 
         }
-        public bool AddStudentToWaitingList(StudentViewModel newStudent, int courseId) {
-            // Check if the course exists
-            if (GetCourseByID(courseId) == null) {
-                return false;
-            }
+        public bool AddStudentToWaitingList(StudentViewModel newStudent, int courseID) {
             // Check if the student exists
             if (!CheckIfStudentExists(newStudent.studentID)) {
-                return false;
+                return false; return false;
             }
             // Check if the student is already on the waiting list
-            if (IsOnWaitingList(newStudent.studentID, courseId)) {
+            if (IsOnWaitingList(newStudent.studentID, courseID)) {
+                return false;
+            }
+            // Check if the student is already enrolled in the course. 
+            // A student cannot be enrolled in both the waiting list
+            if(checkIfAlreadyRegistered(newStudent.studentID, courseID)){
                 return false;
             }
             // Add the student to the course
-            var added = _repo.AddStudentToWaitingList(newStudent, courseId);
+            var added = _repo.AddStudentToWaitingList(newStudent, courseID);
             // Student addes successfully
             return true;
         }
 
         public bool canAddToCourse(int courseID) {
-            // Check if course exists
-            if (GetCourseByID(courseID) == null) {
-                return false;
-            }
             // Get how many are registered
             int registered = _repo.checkRegistered(courseID);
             // Get how many can register
@@ -179,8 +172,15 @@ namespace CoursesAPI.Services {
 
         public bool removeStudentFromCourse(int courseID, string ssn) {
             bool removed = _repo.removeStudentFromCourse(courseID, ssn);
-
             return removed;
+        }
+
+        public bool CourseExists(int courseID){
+            var course = GetCourseByID(courseID);
+            if(course == null){
+                return false;
+            }
+            return true;
         }
     }
 }

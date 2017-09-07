@@ -37,6 +37,10 @@ namespace API.Controllers {
         // GET api/courses/1/students
         [HttpGet("{courseID:int}/students", Name = "GetStudentsInCourse")]
         public IActionResult GetStudentsInCourse(int courseID) {
+            // Check if the course exists
+            if(!_coursesService.CourseExists(courseID)){
+                return NotFound();
+            }
             var students = _coursesService.GetStudentsInCourse(courseID);
             if (students == null) {
                 return NotFound();
@@ -47,9 +51,15 @@ namespace API.Controllers {
         // PUT api/courses/1
         [HttpPut("{courseID:int}", Name = "UpdateCourse")]
         public IActionResult UpdateCourse(int courseID, [FromBody] CourseViewModel updatedCourse) {
+            // Given json object is not valid
             if (!ModelState.IsValid) {
                 return StatusCode(412);
             }
+            // Check if the course exists
+            if(!_coursesService.CourseExists(courseID)){
+                return NotFound();
+            }
+
             var course = _coursesService.UpdateCourse(courseID, updatedCourse);
             if (course == null) {
                 return NotFound();
@@ -70,23 +80,28 @@ namespace API.Controllers {
                 return BadRequest();
             }
 
-            //error check here
             return Ok();
         }
 
         // DELETE api/courses/1
         [HttpDelete("{courseID:int}", Name = "UpdateCourse")]
         public IActionResult DeleteCourse(int courseID) {
-                if (_coursesService.DeleteCourse(courseID)) {
-                    return NoContent();
-                }
-                // Success?
+            if(!_coursesService.CourseExists(courseID)){
                 return NotFound();
             }
+            if (_coursesService.DeleteCourse(courseID)) {
+                return NoContent();
+            }
+            // Success?
+            return NotFound();
+        }
             
         [HttpPost("{courseID:int}/students")]
         public IActionResult AddStudentToCourse([FromBody] StudentViewModel newStudent, int courseID) {
             // Check if the current number of registered students has reached limit
+             if(!_coursesService.CourseExists(courseID)){
+                return NotFound();
+            }
             bool canAddToCourse = _coursesService.canAddToCourse(courseID);
             if (!canAddToCourse) {
                 // Student cannot be added to the course
@@ -105,6 +120,9 @@ namespace API.Controllers {
         // /api/courses/1/waitinglist
         [HttpGet("{courseID:int}/waitingList")]
         public IActionResult GetWaitingList(int courseID) {
+            if(!_coursesService.CourseExists(courseID)){
+                return NotFound();
+            }
 
             List<StudentsDTO> waitingList = _coursesService.GetWaitingList(courseID);
             //Error handle
@@ -112,19 +130,25 @@ namespace API.Controllers {
             return Ok();
         }
 
-        [HttpPost("{courseId:int}/waitinglist")]
-        public IActionResult AddStudentToWaitingList([FromBody] StudentViewModel newStudent, int courseId) {
-            bool addedToWaitingList = _coursesService.AddStudentToWaitingList(newStudent, courseId);
+        [HttpPost("{courseID:int}/waitinglist")]
+        public IActionResult AddStudentToWaitingList([FromBody] StudentViewModel newStudent, int courseID) {
+             if(!_coursesService.CourseExists(courseID)){
+                return NotFound();
+            }
+            bool addedToWaitingList = _coursesService.AddStudentToWaitingList(newStudent, courseID);
             return Ok();
 
         }
 
         [HttpDelete("{courseId:int}/students/{ssn}")]
         public IActionResult RemoveStudentFromCourse(int courseID, string ssn) {
+             if(!_coursesService.CourseExists(courseID)){
+                return NotFound();
+            }
             bool addedToWaitingList = _coursesService.removeStudentFromCourse(courseID, ssn);
             return Ok();
-
         }
+        
 
     }
 }

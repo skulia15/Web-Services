@@ -20,5 +20,6 @@ namespace CoursesAPI.Services {
         bool canAddToCourse(int courseID);
         bool removeFromWaitingList(int studentID, int courseID);
         bool removeStudentFromCourse(int courseID, string ssn);
+        bool CourseExists(int courseID);
     }
 }
