@@ -6,5 +6,6 @@ namespace CoursesAPI.Models.EntityModels {
         public int ID { get; set; }
         public int studentID { get; set; }
         public int courseID { get; set; }
+        public bool deleted { get; set; }
     }
 }

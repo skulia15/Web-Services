@@ -73,21 +73,19 @@ namespace CoursesAPI.Services {
             }
             // Check if the student is already registered in the course
             bool isRegistered = checkIfAlreadyRegistered(newStudent.studentID, courseID);
-            bool isWaiting = IsOnWaitingList(newStudent.studentID,courseID);
+
+            bool isWaiting = IsOnWaitingList(newStudent.studentID, courseID);
             // If student is already registered you cannot add him again
-            if(isRegistered){
+            if (isRegistered) {
                 return false;
             }
             //check if the course id is indeed valid
-            if(GetCourseByID(courseID) == null)
-            {
+            if (GetCourseByID(courseID) == null) {
                 return false;
             }
-            if(isWaiting)
-            {
-                bool removed = removeFromWaitingList(newStudent.studentID,courseID);
-                if(!removed)
-                {
+            if (isWaiting) {
+                bool removed = removeFromWaitingList(newStudent.studentID, courseID);
+                if (!removed) {
                     return false;
                 }
             }
@@ -101,11 +99,9 @@ namespace CoursesAPI.Services {
             return false;
         }
 
-        public bool removeFromWaitingList(int studentID, int courseID)
-        {
-            bool isGone = _repo.removeFromWaitingList(studentID,courseID);
-            if(isGone)
-            {
+        public bool removeFromWaitingList(int studentID, int courseID) {
+            bool isGone = _repo.removeFromWaitingList(studentID, courseID);
+            if (isGone) {
                 return true;
             }
             return false;
@@ -119,8 +115,6 @@ namespace CoursesAPI.Services {
             return false;
         }
 
-        
-
         public List<StudentsDTO> GetWaitingList(int courseID) {
             // If course is note found
             var course = GetCourseByID(courseID);
@@ -131,24 +125,30 @@ namespace CoursesAPI.Services {
             List<StudentsDTO> waitingList = _repo.GetWaitingList(courseID);
             return waitingList;
         }
-        public bool IsOnWaitingList(int studentID,int courseID)
-        {
+        public bool IsOnWaitingList(int studentID, int courseID) {
             bool isWaiting = _repo.checkIfAlreadyOnWaitingList(studentID, courseID);
             if (isWaiting) {
-                 return true;
+                return true;
             }
             return false;
 
-
         }
         public bool AddStudentToWaitingList(StudentViewModel newStudent, int courseId) {
+            // Check if the course exists
             if (GetCourseByID(courseId) == null) {
                 return false;
             }
+            // Check if the student exists
             if (!CheckIfStudentExists(newStudent.studentID)) {
                 return false;
             }
+            // Check if the student is already on the waiting list
+            if (IsOnWaitingList(newStudent.studentID, courseId)) {
+                return false;
+            }
+            // Add the student to the course
             var added = _repo.AddStudentToWaitingList(newStudent, courseId);
+            // Student addes successfully
             return true;
         }
 
@@ -172,11 +172,15 @@ namespace CoursesAPI.Services {
         public bool checkIfAlreadyRegistered(int studentID, int courseID) {
             bool isRegistered = _repo.checkIfAlreadyRegistered(studentID, courseID);
             if (isRegistered) {
-                 return true;
+                return true;
             }
             return false;
         }
 
-   
+        public bool removeStudentFromCourse(int courseID, string ssn) {
+            bool removed = _repo.removeStudentFromCourse(courseID, ssn);
+
+            return removed;
+        }
     }
 }

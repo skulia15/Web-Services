@@ -21,5 +21,6 @@ namespace CoursesAPI.Repositories {
         bool checkIfAlreadyRegistered(int studentID, int courseID);
         bool checkIfAlreadyOnWaitingList(int studentID, int courseID);
         bool removeFromWaitingList(int studentID, int courseID);
+        bool removeStudentFromCourse(int courseID, string ssn);
     }
 }

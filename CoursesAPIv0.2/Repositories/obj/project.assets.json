@@ -2701,23 +2701,23 @@
     ]
   },
   "packageFolders": {
-    "/home/andri/.nuget/packages/": {},
-    "/usr/share/dotnet/sdk/NuGetFallbackFolder": {}
+    "C:\\Users\\Skúli\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/andri/Web-Services/CoursesAPIv0.2/Repositories/Repositories.csproj",
+      "projectUniqueName": "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPIv0.2\\Repositories\\Repositories.csproj",
       "projectName": "Repositories",
-      "projectPath": "/home/andri/Web-Services/CoursesAPIv0.2/Repositories/Repositories.csproj",
-      "packagesPath": "/home/andri/.nuget/packages/",
-      "outputPath": "/home/andri/Web-Services/CoursesAPIv0.2/Repositories/obj/",
+      "projectPath": "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPIv0.2\\Repositories\\Repositories.csproj",
+      "packagesPath": "C:\\Users\\Skúli\\.nuget\\packages\\",
+      "outputPath": "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPIv0.2\\Repositories\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "/home/andri/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Skúli\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.0"
@@ -2728,8 +2728,8 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "/home/andri/Web-Services/CoursesAPIv0.2/Models/Models.csproj": {
-              "projectPath": "/home/andri/Web-Services/CoursesAPIv0.2/Models/Models.csproj"
+            "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPIv0.2\\Models\\Models.csproj": {
+              "projectPath": "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\CoursesAPIv0.2\\Models\\Models.csproj"
             }
           }
         }

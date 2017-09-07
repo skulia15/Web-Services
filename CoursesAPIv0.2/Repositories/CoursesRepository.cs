@@ -85,9 +85,10 @@ namespace CoursesAPI.Repositories {
         }
 
         public List<StudentsDTO> GetStudentsInCourse(int courseID) {
-            var students = (from s in _db.Students join sc in _db.StudentCourses on s.ID equals sc.studentID where sc.courseID == courseID select new StudentsDTO {
+            var students = (from s in _db.Students join sc in _db.StudentCourses 
+                            on s.ID equals sc.studentID where sc.courseID == courseID && sc.deleted == false select new StudentsDTO {
                 ssn = s.ssn,
-                    name = s.name
+                name = s.name,
             }).ToList();
             return students;
         }
@@ -97,9 +98,11 @@ namespace CoursesAPI.Repositories {
             if (students == null) {
                 return false;
             } else {
+                
                 StudentCourses studentCourse = new StudentCourses {
                     courseID = courseID,
-                    studentID = newStudent.studentID
+                    studentID = newStudent.studentID,
+                    deleted = false
                 };
 
                 _db.StudentCourses.Add(studentCourse);
@@ -115,7 +118,6 @@ namespace CoursesAPI.Repositories {
             return students;
         }
         public bool AddStudentToWaitingList(StudentViewModel newStudent, int courseId) {
-
             WaitingList waitingList = new WaitingList {
                 courseID = courseId,
                 studentID = newStudent.studentID
@@ -140,9 +142,7 @@ namespace CoursesAPI.Repositories {
 
         public int checkRegistered(int courseID) {
             // Check how many students are registered in the course
-            int registeredInCourse = (from sc in _db.StudentCourses 
-                                        where sc.courseID == courseID 
-                                        select sc).Count();
+            int registeredInCourse = (from sc in _db.StudentCourses where sc.courseID == courseID && sc.deleted == false select sc).Count();
             return registeredInCourse;
         }
 
@@ -152,35 +152,29 @@ namespace CoursesAPI.Repositories {
             return maxStudentsInCourse;
         }
 
-        public bool checkIfAlreadyRegistered(int studentID, int courseID)
-        {
-            var isRegistered = (from sc in _db.StudentCourses
-                                    where sc.studentID == studentID
-                                    && sc.courseID == courseID
-                                    select sc).SingleOrDefault();
-            if(isRegistered == null){
+        public bool checkIfAlreadyRegistered(int studentID, int courseID) {
+            // Find the student in the relational table and if the student is enrolled
+            var isRegistered = (from sc in _db.StudentCourses where sc.studentID == studentID &&
+                sc.courseID == courseID && (sc.deleted == false)  select sc).SingleOrDefault();
+            // Not found in the relational table
+            if (isRegistered == null) {
                 return false;
             }
             return true;
         }
-        public bool checkIfAlreadyOnWaitingList(int studentID, int courseID)
-        {
-            var isWaiting = (from wl in _db.WaitingList
-                                    where wl.studentID == studentID
-                                    && wl.courseID == courseID
-                                    select wl).SingleOrDefault();
-            if(isWaiting == null){
+        public bool checkIfAlreadyOnWaitingList(int studentID, int courseID) {
+            var isWaiting = (from wl in _db.WaitingList where wl.studentID == studentID &&
+                wl.courseID == courseID select wl).SingleOrDefault();
+            if (isWaiting == null) {
                 return false;
             }
             return true;
         }
 
-        public bool removeFromWaitingList(int studentID, int courseID)
-        {
-            var remove = (from s in _db.WaitingList where s.studentID == studentID
-                                && s.courseID == courseID select s).SingleOrDefault();
-            if (remove == null) 
-            {
+        public bool removeFromWaitingList(int studentID, int courseID) {
+            var remove = (from s in _db.WaitingList where s.studentID == studentID &&
+                s.courseID == courseID select s).SingleOrDefault();
+            if (remove == null) {
                 return false;
             }
 
@@ -188,7 +182,24 @@ namespace CoursesAPI.Repositories {
             _db.SaveChanges();
             return true;
 
+        }
 
+        public bool removeStudentFromCourse(int courseID, string ssn) {
+            // Get the student by ssn
+            var student = (from s in _db.Students where s.ssn == ssn select s).SingleOrDefault();
+            var remove = (from s in _db.StudentCourses where s.studentID == student.ID &&
+                s.courseID == courseID select s).SingleOrDefault();
+            if (remove == null) {
+                // Student not found
+                return false;
+            }
+            remove.deleted = true;
+            try {
+                _db.SaveChanges();
+            } catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
+            return true;
         }
     }
 }

@@ -83,7 +83,8 @@ namespace API.Controllers {
                 // Success?
                 return NotFound();
             }
-            [HttpPost("{courseID:int}/students")]
+            
+        [HttpPost("{courseID:int}/students")]
         public IActionResult AddStudentToCourse([FromBody] StudentViewModel newStudent, int courseID) {
             // Check if the current number of registered students has reached limit
             bool canAddToCourse = _coursesService.canAddToCourse(courseID);
@@ -117,5 +118,13 @@ namespace API.Controllers {
             return Ok();
 
         }
+
+        [HttpDelete("{courseId:int}/students/{ssn}")]
+        public IActionResult RemoveStudentFromCourse(int courseID, string ssn) {
+            bool addedToWaitingList = _coursesService.removeStudentFromCourse(courseID, ssn);
+            return Ok();
+
+        }
+
     }
 }
