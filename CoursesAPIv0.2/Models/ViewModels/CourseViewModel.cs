@@ -5,7 +5,7 @@ namespace CoursesAPI.Models.ViewModels
 {
     public class CourseViewModel
     {
-        public string courseID { get; set; }
+        public string templateID { get; set; }
         // Example: 2016-08-17
         public System.DateTime startDate { get; set; }
         // Example: 2016-11-08)

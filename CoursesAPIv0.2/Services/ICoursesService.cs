@@ -12,7 +12,7 @@ namespace CoursesAPI.Services {
         CoursesDTO UpdateCourse(int courseID, CourseViewModel updatedCourse);
         bool CreateCourse(CourseViewModel newCourse);
         bool DeleteCourse(int courseID);
-        bool AddStudentToCourse(StudentViewModel newStudent, int courseID);
+        StudentsDTO AddStudentToCourse(StudentViewModel newStudent, int courseID);
         bool AddStudentToWaitingList(StudentViewModel newStudent, int courseId);
         bool CheckIfStudentExists(int studentID);
         List<StudentsDTO> GetStudentsInCourse(int courseID);
@@ -21,5 +21,6 @@ namespace CoursesAPI.Services {
         bool removeFromWaitingList(int studentID, int courseID);
         bool removeStudentFromCourse(int courseID, string ssn);
         bool CourseExists(int courseID);
+        int getStudentID(string ssn);
     }
 }

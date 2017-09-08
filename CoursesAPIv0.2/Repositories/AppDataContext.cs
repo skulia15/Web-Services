@@ -15,5 +15,6 @@ namespace CoursesAPI.Repositories {
         public DbSet<StudentCourses> StudentCourses { get; set; }
 
         public DbSet<WaitingList> WaitingList { get; set; }
+        public DbSet<CourseTemplate> CourseTemplate { get; set; }
     }
 }

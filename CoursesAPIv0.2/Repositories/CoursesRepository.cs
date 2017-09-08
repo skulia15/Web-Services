@@ -21,7 +21,8 @@ namespace CoursesAPI.Repositories {
                 ID = c.ID,
                     name = c.name,
                     templateID = c.templateID,
-                    semester = c.semester
+                    semester = c.semester,
+                    maxStudents = c.maxStudents
             }).ToList();
             return courses;
         }
@@ -58,15 +59,32 @@ namespace CoursesAPI.Repositories {
         }
 
         public bool CreateCourse(CourseViewModel newCourse) {
+            // Check if the course is already active that semester
+            var courseExists = (from c in _db.Courses
+                                where c.templateID == newCourse.templateID && newCourse.semester == c.semester 
+                                select c).SingleOrDefault();
+            // Cannot create course if already active
+            if(courseExists != null){
+                return false;
+            }
+
+            // Check if template course exists
+            var template = (from ct in _db.CourseTemplate where newCourse.templateID == ct.CourseID select ct).SingleOrDefault();
+            if (template == null) {
+                return false;
+            }
+            // Add the course to the DB
             _db.Courses.Add(new Course {
-                templateID = newCourse.courseID,
+                templateID = newCourse.templateID,
                     semester = newCourse.semester,
                     startDate = newCourse.startDate,
                     endDate = newCourse.endDate,
-                    maxStudents = newCourse.maxStudents
+                    maxStudents = newCourse.maxStudents,
+                    name = template.Name
             });
             try {
                 _db.SaveChanges();
+                return true;
             } catch (Exception e) {
                 Console.WriteLine(e.Message);
             }
@@ -78,53 +96,68 @@ namespace CoursesAPI.Repositories {
             if (delCourse == null) {
                 return false;
             }
-
-            _db.Courses.Remove(delCourse);
-            _db.SaveChanges();
+            try {
+                _db.Courses.Remove(delCourse);
+                _db.SaveChanges();
+                return true;
+            } catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
             return true;
         }
 
         public List<StudentsDTO> GetStudentsInCourse(int courseID) {
-            var students = (from s in _db.Students join sc in _db.StudentCourses 
-                            on s.ID equals sc.studentID where sc.courseID == courseID && sc.deleted == false select new StudentsDTO {
+            var students = (from s in _db.Students join sc in _db.StudentCourses on s.ID equals sc.studentID where sc.courseID == courseID && sc.deleted == false select new StudentsDTO {
                 ssn = s.ssn,
-                name = s.name,
+                    name = s.name,
             }).ToList();
             return students;
         }
-        public bool AddStudentToCourse(StudentViewModel newStudent, int courseID) {
-            var students = _db.Students.First(x => x.ID == newStudent.studentID);
+        public StudentsDTO AddStudentToCourse(int studentID, int courseID) {
+            var students = _db.Students.First(x => x.ID == studentID);
 
             if (students == null) {
-                return false;
-            } else {
-                
+                return null;
+            } 
+            else {
                 StudentCourses studentCourse = new StudentCourses {
                     courseID = courseID,
-                    studentID = newStudent.studentID,
+                    studentID = studentID,
                     deleted = false
                 };
+                // Creata a new ScooberDTO
+                StudentsDTO scoober = new StudentsDTO{
+                    ssn = students.ssn,
+                    name = students.name
+                };
 
-                _db.StudentCourses.Add(studentCourse);
-                _db.SaveChanges();
-                return true;
+                try {
+                    _db.StudentCourses.Add(studentCourse);
+                    _db.SaveChanges();
+                    return scoober;
+                } catch (Exception e) {
+                    Console.WriteLine(e.Message);
+                }
+                return null;
             }
         }
         public List<StudentsDTO> GetWaitingList(int courseID) {
             var students = (from s in _db.Students join wl in _db.WaitingList on s.ID equals wl.studentID where wl.courseID == courseID select new StudentsDTO {
                 ssn = s.ssn,
-                    name = s.name
+                name = s.name
             }).ToList();
             return students;
         }
-        public bool AddStudentToWaitingList(StudentViewModel newStudent, int courseId) {
+        public bool AddStudentToWaitingList(int studentID, int courseID) {
             WaitingList waitingList = new WaitingList {
-                courseID = courseId,
-                studentID = newStudent.studentID
+                courseID = courseID,
+                studentID = studentID
             };
-            _db.WaitingList.Add(waitingList);
+            
             try {
+                _db.WaitingList.Add(waitingList);
                 _db.SaveChanges();
+                return true;
             } catch (Exception e) {
                 Console.WriteLine(e.Message);
             }
@@ -155,7 +188,7 @@ namespace CoursesAPI.Repositories {
         public bool checkIfAlreadyRegistered(int studentID, int courseID) {
             // Find the student in the relational table and if the student is enrolled
             var isRegistered = (from sc in _db.StudentCourses where sc.studentID == studentID &&
-                sc.courseID == courseID && (sc.deleted == false)  select sc).SingleOrDefault();
+                sc.courseID == courseID && (sc.deleted == false) select sc).SingleOrDefault();
             // Not found in the relational table
             if (isRegistered == null) {
                 return false;
@@ -178,9 +211,14 @@ namespace CoursesAPI.Repositories {
                 return false;
             }
 
-            _db.WaitingList.Remove(remove);
-            _db.SaveChanges();
-            return true;
+            try {
+                _db.WaitingList.Remove(remove);
+                _db.SaveChanges();
+                return true;
+            } catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
+            return false;
 
         }
 
@@ -196,10 +234,39 @@ namespace CoursesAPI.Repositories {
             remove.deleted = true;
             try {
                 _db.SaveChanges();
+                return true;
             } catch (Exception e) {
                 Console.WriteLine(e.Message);
             }
+            return false;
+        }
+
+        public bool CheckIfStudentExistsBySSN(string ssn)
+        {
+            var students = _db.Students.FirstOrDefault(x => x.ssn == ssn);
+            if (students == null) {
+                return false;
+            }
             return true;
+        }
+
+        public StudentsDTO getStudentBySSN(string ssn)
+        {
+            var student = _db.Students.SingleOrDefault(x => x.ssn == ssn);
+            if (student == null) {
+                return null;
+            }
+            StudentsDTO studentDTO = new StudentsDTO{
+                ssn = student.ssn,
+                name = student.name
+            };
+            return studentDTO;
+        }
+
+        public int getStudentID(string ssn)
+        {
+            var student = (from s in _db.Students where s.ssn == ssn select s).SingleOrDefault();
+            return student.ID;
         }
     }
 }

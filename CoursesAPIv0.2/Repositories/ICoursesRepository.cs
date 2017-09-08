@@ -8,10 +8,10 @@ namespace CoursesAPI.Repositories {
     public interface ICoursesRepository {
         IEnumerable<CoursesDTO> GetCourses(string semester);
         CoursesDTO GetCourseByID(int ID);
-        bool AddStudentToWaitingList(StudentViewModel newStudent, int courseId);
+        bool AddStudentToWaitingList(int newStudent, int courseId);
         bool CreateCourse(CourseViewModel newCourse);
         CoursesDTO UpdateCourse(int courseID, CourseViewModel updatedCourse);
-        bool AddStudentToCourse(StudentViewModel newStudent, int courseID);
+        StudentsDTO AddStudentToCourse(int studentID, int courseID);
         bool DeleteCourse(int courseID);
         List<StudentsDTO> GetStudentsInCourse(int courseID);
         bool CheckIfStudentExists(int studentID);
@@ -22,5 +22,8 @@ namespace CoursesAPI.Repositories {
         bool checkIfAlreadyOnWaitingList(int studentID, int courseID);
         bool removeFromWaitingList(int studentID, int courseID);
         bool removeStudentFromCourse(int courseID, string ssn);
+        bool CheckIfStudentExistsBySSN(string ssn);
+        StudentsDTO getStudentBySSN(string ssn);
+        int getStudentID(string ssn);
     }
 }

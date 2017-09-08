@@ -67,38 +67,40 @@ namespace CoursesAPI.Services {
         }
         // Checks if the course is valid, if so adds the students to
         // that course by creating a new entry in the relational table studentCourses
-        public bool AddStudentToCourse(StudentViewModel newStudent, int courseID) {
+        public StudentsDTO AddStudentToCourse(StudentViewModel newStudent, int courseID) {
             // Check if the student exists
-            if (!CheckIfStudentExists(newStudent.studentID)) {
-                return false;
-            }
+            int studentID = getStudentID(newStudent.ssn);
             // Check if the student is already registered in the course
-            bool isRegistered = checkIfAlreadyRegistered(newStudent.studentID, courseID);
-
-            bool isWaiting = IsOnWaitingList(newStudent.studentID, courseID);
+            bool isWaiting = IsOnWaitingList(studentID, courseID);
             // If student is already registered you cannot add him again
-            if (isRegistered) {
-                return false;
+            if (checkIfAlreadyRegistered(studentID, courseID)) {
+                return null;
             }
             //check if the course id is indeed valid
             if (GetCourseByID(courseID) == null) {
-                return false;
+                return null;
             }
             if (isWaiting) {
-                bool removed = removeFromWaitingList(newStudent.studentID, courseID);
+                bool removed = removeFromWaitingList(studentID, courseID);
                 if (!removed) {
-                    return false;
+                    return null;
                 }
             }
 
             // Add the student to the course
-            bool addStudent = _repo.AddStudentToCourse(newStudent, courseID);
-            if (addStudent) {
-                return true;
+            var addStudent = _repo.AddStudentToCourse(studentID, courseID);
+            if (addStudent != null) {
+                return addStudent;
             }
             // Error adding student to the course
-            return false;
+            return null;
         }
+
+        public int getStudentID(string ssn)
+        {
+            return _repo.getStudentID(ssn);
+        }
+
 
         public bool removeFromWaitingList(int studentID, int courseID) {
             bool isGone = _repo.removeFromWaitingList(studentID, courseID);
@@ -110,6 +112,14 @@ namespace CoursesAPI.Services {
 
         public bool CheckIfStudentExists(int studentID) {
             bool studentExists = _repo.CheckIfStudentExists(studentID);
+            if (studentExists) {
+                return true;
+            }
+            return false;
+        }
+
+         public bool CheckIfStudentExistsBySSN(string ssn) {
+            bool studentExists = _repo.CheckIfStudentExistsBySSN(ssn);
             if (studentExists) {
                 return true;
             }
@@ -131,20 +141,21 @@ namespace CoursesAPI.Services {
         }
         public bool AddStudentToWaitingList(StudentViewModel newStudent, int courseID) {
             // Check if the student exists
-            if (!CheckIfStudentExists(newStudent.studentID)) {
-                return false; return false;
+            int studentID = getStudentID(newStudent.ssn);
+            if (!CheckIfStudentExists(studentID)) {
+                return false;
             }
             // Check if the student is already on the waiting list
-            if (IsOnWaitingList(newStudent.studentID, courseID)) {
+            if (IsOnWaitingList(studentID, courseID)) {
                 return false;
             }
             // Check if the student is already enrolled in the course. 
             // A student cannot be enrolled in both the waiting list
-            if(checkIfAlreadyRegistered(newStudent.studentID, courseID)){
+            if(checkIfAlreadyRegistered(studentID, courseID)){
                 return false;
             }
             // Add the student to the course
-            var added = _repo.AddStudentToWaitingList(newStudent, courseID);
+            var added = _repo.AddStudentToWaitingList(studentID, courseID);
             // Student addes successfully
             return true;
         }
@@ -182,5 +193,6 @@ namespace CoursesAPI.Services {
             }
             return true;
         }
+
     }
 }

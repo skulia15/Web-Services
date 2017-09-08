@@ -38,7 +38,7 @@ namespace API.Controllers {
         [HttpGet("{courseID:int}/students", Name = "GetStudentsInCourse")]
         public IActionResult GetStudentsInCourse(int courseID) {
             // Check if the course exists
-            if(!_coursesService.CourseExists(courseID)){
+            if (!_coursesService.CourseExists(courseID)) {
                 return NotFound();
             }
             var students = _coursesService.GetStudentsInCourse(courseID);
@@ -56,7 +56,7 @@ namespace API.Controllers {
                 return StatusCode(412);
             }
             // Check if the course exists
-            if(!_coursesService.CourseExists(courseID)){
+            if (!_coursesService.CourseExists(courseID)) {
                 return NotFound();
             }
 
@@ -86,20 +86,26 @@ namespace API.Controllers {
         // DELETE api/courses/1
         [HttpDelete("{courseID:int}", Name = "UpdateCourse")]
         public IActionResult DeleteCourse(int courseID) {
-            if(!_coursesService.CourseExists(courseID)){
+            if (!_coursesService.CourseExists(courseID)) {
                 return NotFound();
             }
             if (_coursesService.DeleteCourse(courseID)) {
                 return NoContent();
             }
-            // Success?
             return NotFound();
         }
-            
+
+        // POST api/courses/1/students
         [HttpPost("{courseID:int}/students")]
         public IActionResult AddStudentToCourse([FromBody] StudentViewModel newStudent, int courseID) {
             // Check if the current number of registered students has reached limit
-             if(!_coursesService.CourseExists(courseID)){
+            if (!_coursesService.CourseExists(courseID)) {
+                return NotFound();
+            }
+            // Get the id of the student
+            int studentID = _coursesService.getStudentID(newStudent.ssn);
+            // Check if the student exists
+            if (!_coursesService.CheckIfStudentExists(studentID)) {
                 return NotFound();
             }
             bool canAddToCourse = _coursesService.canAddToCourse(courseID);
@@ -108,47 +114,63 @@ namespace API.Controllers {
                 // Return Precondition Failed code
                 return StatusCode(412);
             }
-            bool studentCourse = _coursesService.AddStudentToCourse(newStudent, courseID);
-                if (!studentCourse) {
-                    // Error adding the student to the course
-                    return NotFound();
-                }
-
-            return Ok("Student added to the course");
+            // Return DTOmodel of student
+            var studentCourse = _coursesService.AddStudentToCourse(newStudent, courseID);
+            if (studentCourse == null) {
+                // Error adding the student to the course
+                return NotFound();
+            }
+            return StatusCode(201, studentCourse);
         }
 
         // /api/courses/1/waitinglist
         [HttpGet("{courseID:int}/waitingList")]
         public IActionResult GetWaitingList(int courseID) {
-            if(!_coursesService.CourseExists(courseID)){
+            if (!_coursesService.CourseExists(courseID)) {
                 return NotFound();
             }
 
             List<StudentsDTO> waitingList = _coursesService.GetWaitingList(courseID);
-            //Error handle
-            //return 200
-            return Ok();
+            // Check if waiting list exists
+            if (waitingList == null) {
+                return NotFound();
+            }
+            return Ok(waitingList);
         }
 
         [HttpPost("{courseID:int}/waitinglist")]
         public IActionResult AddStudentToWaitingList([FromBody] StudentViewModel newStudent, int courseID) {
-             if(!_coursesService.CourseExists(courseID)){
+            // Check if the course exists
+            if (!_coursesService.CourseExists(courseID)) {
+                return NotFound();
+            }
+            // Get the ID of the student
+            int studentID = _coursesService.getStudentID(newStudent.ssn);
+            // Check if the student exists
+            if (!_coursesService.CheckIfStudentExists(studentID)) {
                 return NotFound();
             }
             bool addedToWaitingList = _coursesService.AddStudentToWaitingList(newStudent, courseID);
+            if(!addedToWaitingList){
+                return StatusCode(412);
+            }
             return Ok();
-
         }
 
         [HttpDelete("{courseId:int}/students/{ssn}")]
         public IActionResult RemoveStudentFromCourse(int courseID, string ssn) {
-             if(!_coursesService.CourseExists(courseID)){
+            // Check if the course exists
+            if (!_coursesService.CourseExists(courseID)) {
+                return NotFound();
+            }
+            // Get the ID of the student
+            int studentID = _coursesService.getStudentID(ssn);
+            // Check if the student exists
+            if (!_coursesService.CheckIfStudentExists(studentID)) {
                 return NotFound();
             }
             bool addedToWaitingList = _coursesService.removeStudentFromCourse(courseID, ssn);
             return Ok();
         }
-        
-
     }
 }
