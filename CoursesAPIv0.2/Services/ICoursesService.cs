@@ -22,5 +22,6 @@ namespace CoursesAPI.Services {
         bool removeStudentFromCourse(int courseID, string ssn);
         bool CourseExists(int courseID);
         int getStudentID(string ssn);
+        bool checkIfAlreadyRegistered(int studentID, int courseID);
     }
 }

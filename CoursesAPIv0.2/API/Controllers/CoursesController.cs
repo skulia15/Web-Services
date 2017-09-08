@@ -68,7 +68,7 @@ namespace API.Controllers {
             return Ok(course);
         }
 
-        // PUT api/courses/1
+        // POST api/courses/
         [HttpPost("", Name = "CreateCourse")]
         public IActionResult CreateCourse([FromBody] CourseViewModel newCourse) {
             if (!ModelState.IsValid) {
@@ -84,7 +84,7 @@ namespace API.Controllers {
         }
 
         // DELETE api/courses/1
-        [HttpDelete("{courseID:int}", Name = "UpdateCourse")]
+        [HttpDelete("{courseID:int}", Name = "DeleteCourse")]
         public IActionResult DeleteCourse(int courseID) {
             if (!_coursesService.CourseExists(courseID)) {
                 return NotFound();
@@ -102,11 +102,18 @@ namespace API.Controllers {
             if (!_coursesService.CourseExists(courseID)) {
                 return NotFound();
             }
-            // Get the id of the student
+            // Get the id of the student, return NotFound if not found
             int studentID = _coursesService.getStudentID(newStudent.ssn);
-            // Check if the student exists
+            if(studentID == -1){
+                return NotFound();
+            }
             if (!_coursesService.CheckIfStudentExists(studentID)) {
                 return NotFound();
+            }
+            // Check if the student exists
+            
+            if(_coursesService.checkIfAlreadyRegistered(studentID, courseID)){
+                return StatusCode(412);
             }
             bool canAddToCourse = _coursesService.canAddToCourse(courseID);
             if (!canAddToCourse) {
@@ -170,7 +177,7 @@ namespace API.Controllers {
                 return NotFound();
             }
             bool addedToWaitingList = _coursesService.removeStudentFromCourse(courseID, ssn);
-            return Ok();
+            return NoContent();
         }
     }
 }

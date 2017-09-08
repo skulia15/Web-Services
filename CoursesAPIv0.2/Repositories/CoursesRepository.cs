@@ -266,6 +266,10 @@ namespace CoursesAPI.Repositories {
         public int getStudentID(string ssn)
         {
             var student = (from s in _db.Students where s.ssn == ssn select s).SingleOrDefault();
+            // If student is not found
+            if(student == null){
+                return -1;
+            }
             return student.ID;
         }
     }

@@ -7,7 +7,8 @@ using CoursesAPI.Models.ViewModels;
 using CoursesAPI.Repositories;
 
 /// <summary>
-/// This class sends request to the courseRepo and returns appropriate information
+/// This class sends request to the courseRepo
+/// and returns appropriate information or affects the database
 /// </summary>
 namespace CoursesAPI.Services {
     public class CoursesServices : ICoursesService {
@@ -96,11 +97,9 @@ namespace CoursesAPI.Services {
             return null;
         }
 
-        public int getStudentID(string ssn)
-        {
+        public int getStudentID(string ssn) {
             return _repo.getStudentID(ssn);
         }
-
 
         public bool removeFromWaitingList(int studentID, int courseID) {
             bool isGone = _repo.removeFromWaitingList(studentID, courseID);
@@ -118,7 +117,7 @@ namespace CoursesAPI.Services {
             return false;
         }
 
-         public bool CheckIfStudentExistsBySSN(string ssn) {
+        public bool CheckIfStudentExistsBySSN(string ssn) {
             bool studentExists = _repo.CheckIfStudentExistsBySSN(ssn);
             if (studentExists) {
                 return true;
@@ -151,7 +150,7 @@ namespace CoursesAPI.Services {
             }
             // Check if the student is already enrolled in the course. 
             // A student cannot be enrolled in both the waiting list
-            if(checkIfAlreadyRegistered(studentID, courseID)){
+            if (checkIfAlreadyRegistered(studentID, courseID)) {
                 return false;
             }
             // Add the student to the course
@@ -165,7 +164,7 @@ namespace CoursesAPI.Services {
             int registered = _repo.checkRegistered(courseID);
             // Get how many can register
             int maxInCourse = _repo.getMaxInCourse(courseID);
-            if (registered < maxInCourse) {
+            if (registered <= maxInCourse) {
                 // Maximum is not reached, can add to course
                 return true;
             }
@@ -186,9 +185,9 @@ namespace CoursesAPI.Services {
             return removed;
         }
 
-        public bool CourseExists(int courseID){
+        public bool CourseExists(int courseID) {
             var course = GetCourseByID(courseID);
-            if(course == null){
+            if (course == null) {
                 return false;
             }
             return true;
