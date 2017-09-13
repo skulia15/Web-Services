@@ -143,7 +143,7 @@ namespace CoursesAPI.Tests.Services
 
 			// Assert:
 			// The number of courses should be 1
-			 Assert.Equals(1, CoursesThisSemester.Count());
+			 Assert.AreEqual(1, CoursesThisSemester.Count());
 			 // The list cannot be empty
 			 Assert.IsNotNull(CoursesThisSemester);
 		}
@@ -232,7 +232,7 @@ namespace CoursesAPI.Tests.Services
 
 			// Assert:
 			// Ensure that the number of teachers in the course is the same, that is no teacher was added
-			Assert.Equals(prevCount, _teacherRegistrations.Count());
+			Assert.AreEqual(prevCount, _teacherRegistrations.Count());
 			// Assert that an exception has been thrown.
 			Assert.Fail("No exception was thrown");
 		}
