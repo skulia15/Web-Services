@@ -12575,11 +12575,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\API\\API.csproj",
+      "projectUniqueName": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\API\\API.csproj",
+      "projectPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\API\\API.csproj",
       "packagesPath": "C:\\Users\\Skúli\\.nuget\\packages\\",
-      "outputPath": "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\API\\obj\\",
+      "outputPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -12596,11 +12596,11 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Models\\Models.csproj": {
-              "projectPath": "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Models\\Models.csproj"
+            "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Models\\Models.csproj": {
+              "projectPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Models\\Models.csproj"
             },
-            "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Services\\Services.csproj": {
-              "projectPath": "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Services\\Services.csproj"
+            "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Services\\Services.csproj": {
+              "projectPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Services\\Services.csproj"
             }
           }
         }

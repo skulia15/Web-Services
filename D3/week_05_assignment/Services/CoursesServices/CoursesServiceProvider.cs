@@ -34,23 +34,25 @@ namespace CoursesAPI.Services.CoursesServices
 		/// <returns>Should return basic information about the person.</returns>
 		public PersonDTO AddTeacherToCourse(int courseInstanceID, AddTeacherViewModel model)
 		{
-			if (courseInstanceID == null){
-				throw new AppObjectNotFoundException();
-			} 
-
 			var MainTeacher = TeacherType.MainTeacher;
 
 			//Check if already registered as a teacher
-			var teacher = (from t in _teacherRegistrations.All() where t.CourseInstanceID == courseInstanceID && t.SSN == model.SSN select t).SingleOrDefault();
+			var teacher = (from t in _teacherRegistrations.All() 
+						where t.CourseInstanceID == courseInstanceID 
+						&& t.SSN == model.SSN select t).FirstOrDefault();	
+
+			
 			if(teacher != null){
 				// Teacher already registered as teacher in this course
 				throw new AppValidationException("Teacher already registered");				
 			}
-
+			
 			// If trying to add a main teacher
 			// Check number of main teachers
 			if(model.Type == MainTeacher){
-				int numberOfMainTeachers = (from t in _teacherRegistrations.All() where t.CourseInstanceID == courseInstanceID && t.Type == MainTeacher select t).Count();
+				int numberOfMainTeachers = (from t in _teacherRegistrations.All() 
+											where t.CourseInstanceID == courseInstanceID 
+											&& t.Type == MainTeacher select t).Count();
 				if(numberOfMainTeachers >= 1){
 					// Cannot add main teacher if there already is one
 					throw new AppValidationException("Cannot add main teacher if there already is one");

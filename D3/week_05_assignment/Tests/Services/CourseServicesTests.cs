@@ -171,7 +171,11 @@ namespace CoursesAPI.Tests.Services
 			var prevCount = _teacherRegistrations.Count;
 
 			// Act:
+				Console.WriteLine("Mike Krendbor\n");
 			var dto = _service.AddTeacherToCourse(COURSEID_VEFT_20163, model);
+			if(dto == null){
+				return;
+			}
 
 			// Assert:
 

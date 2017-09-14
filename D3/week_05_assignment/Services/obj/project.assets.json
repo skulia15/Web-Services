@@ -2547,11 +2547,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Services\\Services.csproj",
+      "projectUniqueName": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Services\\Services.csproj",
       "projectName": "Services",
-      "projectPath": "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Services\\Services.csproj",
+      "projectPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Services\\Services.csproj",
       "packagesPath": "C:\\Users\\Skúli\\.nuget\\packages\\",
-      "outputPath": "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Services\\obj\\",
+      "outputPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Services\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -2568,8 +2568,8 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Models\\Models.csproj": {
-              "projectPath": "c:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Models\\Models.csproj"
+            "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Models\\Models.csproj": {
+              "projectPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Models\\Models.csproj"
             }
           }
         }
