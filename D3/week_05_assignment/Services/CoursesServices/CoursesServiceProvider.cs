@@ -34,6 +34,10 @@ namespace CoursesAPI.Services.CoursesServices
 		/// <returns>Should return basic information about the person.</returns>
 		public PersonDTO AddTeacherToCourse(int courseInstanceID, AddTeacherViewModel model)
 		{
+			var course = (from c in _courseInstances.All() where courseInstanceID == c.ID select c).SingleOrDefault();
+			if(course == null){
+				throw new AppObjectNotFoundException();
+			}
 			var MainTeacher = TeacherType.MainTeacher;
 
 			//Check if already registered as a teacher
@@ -59,24 +63,25 @@ namespace CoursesAPI.Services.CoursesServices
 				}
 			}
 
-			TeacherRegistration skebor = new TeacherRegistration{
+			TeacherRegistration newTeacher = new TeacherRegistration{
 				CourseInstanceID = courseInstanceID,
 				SSN = model.SSN,
 				Type = model.Type
 			};
 
-			_teacherRegistrations.Add(skebor);
+			_teacherRegistrations.Add(newTeacher);
 
-			var getName = (from killMe in _persons.All() where killMe.SSN == teacher.SSN select killMe).SingleOrDefault();
+			var getName = (from p in _persons.All() where p.SSN == model.SSN select p).SingleOrDefault();
 			if(getName == null){
 				// Person is not registered
-				throw new AppValidationException("Person is not registered");			
+				throw new AppObjectNotFoundException();			
 			}
 
 			PersonDTO newPerson = new PersonDTO{
 				SSN = getName.SSN,
 				Name = getName.Name
 			};
+			_uow.Save();
 			
 			return newPerson;
 		}
@@ -103,10 +108,32 @@ namespace CoursesAPI.Services.CoursesServices
 					Name               = ct.Name,
 					TemplateID         = ct.CourseID,
 					CourseInstanceID   = c.ID,
-					MainTeacher        = "" // Hint: it should not always return an empty string!
+					MainTeacher        = GetMainTeacherName(semester) // Hint: it should not always return an empty string!
 				}).ToList();
 
 			return courses;
+		}
+		private string GetMainTeacherName(string semester){
+			// Get the course the specific course we are making when calling this function
+			var course = (from c in _courseInstances.All()
+						join ct in _courseTemplates.All() on c.CourseID equals ct.CourseID
+						where c.SemesterID == semester select c).SingleOrDefault();
+			// Get the teachers that is teaching that course
+			var teacher = (from t in _teacherRegistrations.All() 
+						where t.CourseInstanceID == course.ID 
+						&& t.Type == TeacherType.MainTeacher
+						select t).SingleOrDefault();
+			if(teacher == null){
+				return "";
+			}
+			
+			var person = (from p in _persons.All() 
+						where p.SSN == teacher.SSN
+						select p).SingleOrDefault();
+			if(person == null){
+				return "";
+			}
+			return person.Name;
 		}
 	}
 }

@@ -19,9 +19,12 @@ namespace CoursesAPI.Tests.Services
 
 		private const string SSN_DABS    = "1203735289";
 		private const string SSN_GUNNA   = "1234567890";
+
+		private const string SSN_SKEBOR = "0101010101";
 		private const string INVALID_SSN = "9876543210";
 
 		private const string NAME_GUNNA  = "Guðrún Guðmundsdóttir";
+		private const string NAME_SKEBOR  = "Guðrún Guðmundsdóttir";
 
 		private const int COURSEID_VEFT_20153 = 1337;
 		private const int COURSEID_VEFT_20163 = 1338;
@@ -52,6 +55,13 @@ namespace CoursesAPI.Tests.Services
 					Name  = NAME_GUNNA,
 					SSN   = SSN_GUNNA,
 					Email = "gunna@ru.is"
+				},
+				new Person
+				{
+					ID    = 3,
+					Name  = NAME_SKEBOR,
+					SSN   = SSN_SKEBOR,
+					Email = "skebor@ru.is"
 				}
 			};
 			#endregion
@@ -83,13 +93,7 @@ namespace CoursesAPI.Tests.Services
 					ID         = COURSEID_VEFT_20163,
 					CourseID   = "T-514-VEFT",
 					SemesterID = "20163"
-				}/*,
-				new CourseInstance
-				{
-					ID = COURSEID_VEFT_20163,
-					CourseID   = "T-514-VEFT",
-					SemesterID = NonValidSemester
-				}*/
+				}
 			};
 			#endregion
 
@@ -129,8 +133,42 @@ namespace CoursesAPI.Tests.Services
 			// Act:
 			var CoursesThisSemester = _service.GetCourseInstancesBySemester(NonValidSemester);
 			// Assert:
-			 Assert.IsNotNull(CoursesThisSemester);
-			 Assert.IsTrue(CoursesThisSemester.Count() == 0);
+			// Should return an empty list instead of null
+			Assert.IsNotNull(CoursesThisSemester);
+			// The list should be empty
+			Assert.IsTrue(CoursesThisSemester.Count() == 0);
+		}
+
+		[TestMethod]
+		public void GetCoursesBySemester_ReturnsCoursesWhereSemesterIsNotGiven()
+		{
+			// Arrange:
+			
+			// Act:
+			// Get courses in the semester 20153 because no semester is specified
+			var CoursesThisSemester = _service.GetCourseInstancesBySemester();
+			// Assert:
+			// Should return a course
+			Assert.IsNotNull(CoursesThisSemester);
+			// Should return a list of courses with one course
+			Assert.IsTrue(CoursesThisSemester.Count() == 1);
+		}
+
+		[TestMethod]
+		public void GetCoursesBySemester_AssertThatTeachersNameIsIncluded()
+		{
+			// Arrange:
+			
+			// Act:
+			var CoursesThisSemester = _service.GetCourseInstancesBySemester("20153");
+
+			// Assert:
+			// Should return a list of courses with one course
+			Assert.IsNotNull(CoursesThisSemester);
+			foreach(CourseInstanceDTO c in CoursesThisSemester){
+			// Check if the name of the main teacher is included
+			Assert.IsNotNull(c.MainTeacher);
+			}
 		}
 
 		[TestMethod]
@@ -138,6 +176,7 @@ namespace CoursesAPI.Tests.Services
 		{
 			// Arrange:
 			String validSemester = "20163";
+
 			// Act:
 			var CoursesThisSemester = _service.GetCourseInstancesBySemester(validSemester);
 
@@ -148,8 +187,28 @@ namespace CoursesAPI.Tests.Services
 			 Assert.IsNotNull(CoursesThisSemester);
 		}
 
-		// TODO!!! you should write more unit tests here!
+		[TestMethod]
+		public void GetCoursesBySemester_ReturnsAnEmptyStringWhenCourseHasNoMainTeacher()
+		{
+			// Arrange:
+			var model = new AddTeacherViewModel
+			{
+				SSN  = SSN_SKEBOR,
+				Type = TeacherType.AssistantTeacher
+			};
+			var dto = _service.AddTeacherToCourse(COURSEID_VEFT_20163, model);
+			// Act:
+			var CoursesThisSemester = _service.GetCourseInstancesBySemester("20163");
 
+			// Assert:
+			// For all courses in this semester
+			foreach(CourseInstanceDTO c in CoursesThisSemester){
+			// Check if the name of the main teacher is 
+			// If there is no main teacher registered it should return an empty string
+				Assert.IsNotNull(c.MainTeacher);
+				Assert.AreEqual(c.MainTeacher, "");
+			}
+		}
 
 		#endregion
 
@@ -171,12 +230,7 @@ namespace CoursesAPI.Tests.Services
 			var prevCount = _teacherRegistrations.Count;
 
 			// Act:
-				Console.WriteLine("Mike Krendbor\n");
 			var dto = _service.AddTeacherToCourse(COURSEID_VEFT_20163, model);
-			if(dto == null){
-				return;
-			}
-
 			// Assert:
 
 			// Check that the dto object is correctly populated:
@@ -212,7 +266,44 @@ namespace CoursesAPI.Tests.Services
 
 			// Act:
 			var dto = _service.AddTeacherToCourse(INVALID_COURSEID, model);
+			// Assert:
 			Assert.Fail("No exception was thrown");
+		}
+
+		[TestMethod]
+		public void AddTeacher_CheckIfMainTeacherNameIsReturnedCorrectly()
+		{
+			// Arrange:
+			// Should have one course and one main teacher
+			var CoursesIn20153 = _service.GetCourseInstancesBySemester("20153");
+			// Contain one course and no teachers
+			var CoursesIn20163 = _service.GetCourseInstancesBySemester("20163");
+
+			// Act:
+			// Assert:			
+			foreach(CourseInstanceDTO c in CoursesIn20153){
+				Assert.AreNotEqual("", c.MainTeacher);
+				Assert.AreEqual("Daníel B. Sigurgeirsson", c.MainTeacher);
+			}
+			foreach(CourseInstanceDTO c in CoursesIn20163){
+				Assert.AreEqual("", c.MainTeacher);
+			}
+
+			// Arrange pt2:
+			// Add an assistant teacher to a course with no teachers
+			var model = new AddTeacherViewModel
+			{
+				SSN  = SSN_SKEBOR,
+				Type = TeacherType.AssistantTeacher
+			};
+			// Act pt2:
+			// Add an assistant teacher to the course
+			_service.AddTeacherToCourse(COURSEID_VEFT_20163, model);
+			// Assert pt3:
+			// Still no main teacher, check if returns empty string
+			foreach(CourseInstanceDTO c in CoursesIn20163){
+				Assert.AreEqual("", c.MainTeacher);
+			}
 		}
 
 		/// <summary>
@@ -256,8 +347,6 @@ namespace CoursesAPI.Tests.Services
 				SSN  = SSN_GUNNA,
 				Type = TeacherType.MainTeacher
 			};
-			
-
 			// Act:
 			// add a main teacher to a course that already has a main teacher
 			_service.AddTeacherToCourse(COURSEID_VEFT_20153, model);
@@ -267,7 +356,6 @@ namespace CoursesAPI.Tests.Services
 				//TODO
 			// Check if the exception was thrown
 			Assert.Fail("No exception was thrown");
-
 		}
 
 		/// <summary>
@@ -288,13 +376,11 @@ namespace CoursesAPI.Tests.Services
 
 			// Act:
 			// Add teacher to a course he is already teaching
-			_service.AddTeacherToCourse(COURSEID_VEFT_20163, model);
+			_service.AddTeacherToCourse(COURSEID_VEFT_20153, model);
 
 			// Assert:
 			// Check if the exception was thrown
 			Assert.Fail("No exception was thrown");
-
-
 		}
 
 		#endregion
