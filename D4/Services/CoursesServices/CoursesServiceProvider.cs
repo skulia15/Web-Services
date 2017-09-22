@@ -44,11 +44,14 @@ namespace CoursesAPI.Services.CoursesServices
         }
         public string parseHeader(String header)
         {
+            if(header == ""){
+                return "is";
+            }
             var split = header.Split(',').Select(StringWithQualityHeaderValue.Parse)
             .OrderByDescending(x => x.Quality);
             var lang = split.ElementAt(0).ToString();
             var finalSlipt = lang.Split(';');
-
+            
             return finalSlipt[0].ToString();
         }
         /// <summary>
@@ -60,7 +63,7 @@ namespace CoursesAPI.Services.CoursesServices
         /// <returns></returns>
         public Envelope<CourseInstanceDTO> GetCourseInstancesBySemester(String languageHeader,string semester,int pageNumber)
         {
-            int pageSize = 2;
+            int pageSize = 10;
             var templates = _courseTemplates.All().ToList();
             
             if (string.IsNullOrEmpty(semester))

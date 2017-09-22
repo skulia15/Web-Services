@@ -22,6 +22,9 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        /**
+        /api/courses/?pagenumber={pagenumber}
+         */
         public IActionResult GetCoursesBySemester([FromQuery]string semester = null,[FromQuery]int pageNumber = 1)
         {
             // TODO: figure out the requested language (if any!)
