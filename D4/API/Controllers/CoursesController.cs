@@ -6,6 +6,8 @@ using CoursesAPI.Models;
 using CoursesAPI.Services.CoursesServices;
 using CoursesAPI.Services.DataAccess;
 using Microsoft.AspNetCore.Mvc;
+using System.Web;
+
 
 namespace WebApplication.Controllers
 {
@@ -20,12 +22,12 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetCoursesBySemester(string semester = null)
+        public IActionResult GetCoursesBySemester([FromQuery]string semester = null,[FromQuery]int pageNumber = 1)
         {
             // TODO: figure out the requested language (if any!)
             // and pass it to the service provider!
-            var languageHeader = Request.Headers["Accept-Language"];
-            return Ok(_service.GetCourseInstancesBySemester(semester));
+            var languageHeader = Request.Headers["Accept-Language"].ToString();
+            return Ok(_service.GetCourseInstancesBySemester(languageHeader,semester,pageNumber));
         }
 
         /// <summary>
@@ -40,5 +42,7 @@ namespace WebApplication.Controllers
             var result = _service.AddTeacherToCourse(id, model);
             return Created("TODO", result);
         }
+
+
     }
 }

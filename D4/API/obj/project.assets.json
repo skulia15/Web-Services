@@ -12570,23 +12570,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Notandi\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "/home/andri/.nuget/packages/": {},
+    "/usr/share/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Web-Services\\week_06_assignment\\API\\API.csproj",
+      "projectUniqueName": "/home/andri/GitHubProjects/webServices/Web-Services/D4/API/API.csproj",
       "projectName": "API",
-      "projectPath": "c:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Web-Services\\week_06_assignment\\API\\API.csproj",
-      "packagesPath": "C:\\Users\\Notandi\\.nuget\\packages\\",
-      "outputPath": "c:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Web-Services\\week_06_assignment\\API\\obj\\",
+      "projectPath": "/home/andri/GitHubProjects/webServices/Web-Services/D4/API/API.csproj",
+      "packagesPath": "/home/andri/.nuget/packages/",
+      "outputPath": "/home/andri/GitHubProjects/webServices/Web-Services/D4/API/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "/usr/share/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Notandi\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/andri/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.0"
@@ -12597,11 +12597,11 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "c:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Web-Services\\week_06_assignment\\Models\\Models.csproj": {
-              "projectPath": "c:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Web-Services\\week_06_assignment\\Models\\Models.csproj"
+            "/home/andri/GitHubProjects/webServices/Web-Services/D4/Models/Models.csproj": {
+              "projectPath": "/home/andri/GitHubProjects/webServices/Web-Services/D4/Models/Models.csproj"
             },
-            "c:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Web-Services\\week_06_assignment\\Services\\Services.csproj": {
-              "projectPath": "c:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Web-Services\\week_06_assignment\\Services\\Services.csproj"
+            "/home/andri/GitHubProjects/webServices/Web-Services/D4/Services/Services.csproj": {
+              "projectPath": "/home/andri/GitHubProjects/webServices/Web-Services/D4/Services/Services.csproj"
             }
           }
         }
