@@ -5,6 +5,8 @@ using CoursesAPI.Models;
 using CoursesAPI.Services.DataAccess;
 using CoursesAPI.Services.Exceptions;
 using CoursesAPI.Services.Models.Entities;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace CoursesAPI.Services.CoursesServices
 {
@@ -26,27 +28,8 @@ namespace CoursesAPI.Services.CoursesServices
             _teacherRegistrations = _uow.GetRepository<TeacherRegistration>();
             _persons = _uow.GetRepository<Person>();
         }
-
-        public Envelope<CourseInstanceDTO> GetPagedCourses(int pageNumber)
-        {
-            int pageSize = 10;
-            var courses = _courseInstances.All().ToList();
-            int TotalNumberOfItems = courses.Count;
-            int pageCount = (int)Math.Ceiling(TotalNumberOfItems / (double)pageSize);
-
-            var pagedCourses = (from c in courses
-                                select new CourseInstanceDTO{
-                                    CourseInstanceID = c.ID
-                                }).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-            
-            return new Envelope<CourseInstanceDTO>
-            {
-                Items = pagedCourses,
-                TotalPages = pageCount,
-                PageSize = pageSize,
-                CurrentPage = pageNumber
-            };
-        }
+       
+    
 
         /// <summary>
         /// You should implement this function, such that all tests will pass.
@@ -59,7 +42,18 @@ namespace CoursesAPI.Services.CoursesServices
             // TODO: implement this logic!
             return null;
         }
-
+        public string parseHeader(String header)
+        {
+            if(header == ""){
+                return "is";
+            }
+            var split = header.Split(',').Select(StringWithQualityHeaderValue.Parse)
+            .OrderByDescending(x => x.Quality);
+            var lang = split.ElementAt(0).ToString();
+            var finalSlipt = lang.Split(';');
+            
+            return finalSlipt[0].ToString();
+        }
         /// <summary>
         /// You should write tests for this function. You will also need to
         /// modify it, such that it will correctly return the name of the main
@@ -67,15 +61,32 @@ namespace CoursesAPI.Services.CoursesServices
         /// </summary>
         /// <param name="semester"></param>
         /// <returns></returns>
-        public List<CourseInstanceDTO> GetCourseInstancesBySemester(string semester = null)
+        public Envelope<CourseInstanceDTO> GetCourseInstancesBySemester(String languageHeader,string semester,int pageNumber)
         {
+            int pageSize = 10;
+            var templates = _courseTemplates.All().ToList();
+            
             if (string.IsNullOrEmpty(semester))
             {
                 semester = "20153";
             }
-
-            var courses = (from c in _courseInstances.All()
-                           join ct in _courseTemplates.All() on c.CourseID equals ct.CourseID
+            List<CourseInstanceDTO> courses = null;
+            var lang = parseHeader(languageHeader);
+            if(lang == "en"){
+                courses = (from c in _courseInstances.All()
+                            join ct in _courseTemplates.All() on c.CourseID equals ct.CourseID orderby c.ID
+                            where c.SemesterID == semester
+                            select new CourseInstanceDTO
+                            {
+                                Name = ct.NameEN,
+                                TemplateID = ct.CourseID,
+                                CourseInstanceID = c.ID,
+                                MainTeacher = "" // Hint: it should not always return an empty string!
+                            }).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            }
+            else{
+                courses = (from c in _courseInstances.All()
+                           join ct in _courseTemplates.All() on c.CourseID equals ct.CourseID orderby c.ID
                            where c.SemesterID == semester
                            select new CourseInstanceDTO
                            {
@@ -83,9 +94,21 @@ namespace CoursesAPI.Services.CoursesServices
                                TemplateID = ct.CourseID,
                                CourseInstanceID = c.ID,
                                MainTeacher = "" // Hint: it should not always return an empty string!
-                           }).ToList();
+                           }).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            }
+            
 
-            return courses;
+            int TotalNumberOfItems = courses.Count;
+            int pageCount = (int)Math.Ceiling(TotalNumberOfItems / (double)pageSize);
+
+            return new Envelope<CourseInstanceDTO>
+            {
+                Items = courses,
+                TotalPages = pageCount,
+                PageSize = pageSize,
+                CurrentPage = pageNumber
+            };
+
         }
     }
 }
