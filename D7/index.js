@@ -12,19 +12,28 @@ app.get('/', (req, res) => {
 // GET /api/companies
 // Returns a list of all registered companies
 app.get('/api/companies', (req, res) => {
-    res.json(companies);
+    res.json({companies});
 });
 
 // POST /api/companies
 // Adds a new company. The required properties are "name" and "punchCount",
 // indicating how many punches a user needs to collect in order to get a discount.
 app.post('/api/companies', (req, res) => {
-    let newCompany = {};
-    newCompany.id = req.body.id;
-    newCompany.name = req.body.name;
-    newCompany.punchCount = req.punchCount;
-    companies.push(newCompany);
-    res.status(201).send('Company Created!');
+    const {id, name, punchCount} = req.body;
+    if(!name || !name.length){
+        res.status(400).json({error: 'Company must have a name'});
+    }
+    else if(!punchCount){
+        res.status(400).json({error: 'Company must have a punch count'});
+    }
+    else{
+        let newCompany = {};
+        newCompany.id = req.body.id;
+        newCompany.name = req.body.name;
+        newCompany.punchCount = req.body.punchCount;
+        companies.push(newCompany);
+        res.status(201).json({success: 'Company Created!'});
+    }
 });
 
 //  GET /api/companies/{id}
@@ -32,28 +41,37 @@ app.post('/api/companies', (req, res) => {
 app.get('/api/companies/:id', (req, res) => {
     let result = companies.filter(c => c.id == req.params.id);
     if(result.length){
-        res.status(200).json(result);
+        res.status(200).json({result});
     }
     else{
-        res.status(404).send('Company Not Found');
+        res.status(404).json({error: 'Company Not Found'});
     }
 });
 
 //   GET /api/users/
 app.get('/api/users/', (req, res) => {
-    res.json(users);
+    res.json({users});
 });
 
 //   POST /api/users/
 // Adds a new user to the system. The following properties must be specified: name,
 // email
 app.post('/api/users/', (req, res) => {
-    let newUser = {};
-    newUser.id = req.body.id;
-    newUser.name = req.body.name;
-    newUser.email = req.body.email;
-    users.push(newUser);
-    res.status(201).send('User Created!');
+    const {id, name, email} = req.body;
+    if(!name || !name.length){
+        res.status(400).json({error: 'User must have a name'});
+    }
+    else if(!email || !email.length){
+        res.status(400).json({error: 'User must have an email'});
+    }
+    else{
+        let newUser = {};
+        newUser.id = req.body.id;
+        newUser.name = req.body.name;
+        newUser.email = req.body.email;
+        users.push(newUser);
+        res.status(201).json({success: 'User Created!'});
+    }
 });
 
 //   GET /api/users/{id}/punches
@@ -63,19 +81,19 @@ app.post('/api/users/', (req, res) => {
 app.get('/api/users/:id/punches', (req, res) => {
     let user = users.filter(c => c.id == req.params.id);
     // Find the user
-    if(!user){
-        res.status(404).send('User not found');
+    if(!user || !user.length){
+        res.status(404).json({error: 'User not found'});
     }
     // Check if user has any punches
     else if(!user[0].punches.length){
-        res.json({message: 'User has no punches to roll with'});
+        res.json({error: 'User has no punches'});
     }
     // If company is provided
     if(req.query.company){
         let allPunches = user[0].punches;
         let companyPunches = allPunches.filter(p => p.companyId == req.query.company); 
         if(companyPunches.length){
-            res.json(companyPunches);
+            res.json({companyPunches});
         }
         else{
             res.json({message: 'User has no punches from the provided company'});
@@ -91,16 +109,24 @@ app.get('/api/users/:id/punches', (req, res) => {
 // Adds a new punch to the user account. The only information needed is the id of the
 // company
 app.post('/api/users/:id/punches', (req, res) => {
-    let user = users.filter(c => c.id == req.params.id);
-    // Find the user
-    if(!user){
-        res.status(404).send('User not found');
+    const {companyId} = req.body;
+    if(!companyId){
+        res.status(400).json({error: 'A CompanyId must be provided'});
     }
-    let newPunch = {};
-    newPunch.companyId = req.body.companyId;
-    newPunch.date = moment().format('LL');
-    user[0].punches.push(newPunch);
-    res.status(201).send('Punch Added!');
+    else{
+        let user = users.filter(c => c.id == req.params.id);
+        // Find the user
+        if(!user){
+            res.status(404).json({error:'User not found'});
+        }
+        else{
+            let newPunch = {};
+            newPunch.companyId = req.body.companyId;
+            newPunch.date = moment().format('LL');
+            user[0].punches.push(newPunch);
+            res.status(201).json({success: 'Punch Added!'});
+        }
+    }
 });
 
 app.listen(3000, () => console.log('listening on port 3000'));
