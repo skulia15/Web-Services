@@ -10,7 +10,7 @@ npm or yarn package managers and a recent version of Node.js
 
 ### Installing
 
-For each project in node you will need to run '''npm install''' or '''yarn install''' 
+For each project in node you will need to run 'npm install' or 'yarn install'
 
 
 ## Authors
