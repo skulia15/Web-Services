@@ -2,14 +2,15 @@ import moment from "moment";
 import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
-//import {tables} from './entities';
-import { userTopic } from "./mqTopics";
+import {userTopic, punchTopic, discountTopic} from "./mqTopics";
 const { Schema } = mongoose;
 
+// Entities
 const userSchema = Schema({
   name: String,
   token: String,
-  gender: String
+  gender: String,
+  created: Date
 });
 
 const companySchema = Schema({
@@ -24,7 +25,8 @@ const punchSchema = Schema({
   used: Boolean // Initial value false
 });
 
-export default (db, userMq) => {
+// Api
+export default (db, userMq, punchMq, discountMq) => {
   console.log("Mongo Connected");
   const uuidv4 = require("uuid/v4");
   const adminToken = "598d24f1-3d87-4a0d-980a-d00d461be53b";
@@ -128,6 +130,7 @@ export default (db, userMq) => {
     }
     const { name, gender } = req.body;
     const token = uuidv4();
+    const created = moment();
     if (
       !req.body.hasOwnProperty("name") ||
       !req.body.hasOwnProperty("gender")
@@ -139,14 +142,14 @@ export default (db, userMq) => {
       res.statusCode = 412;
       return res.send("Gender should be m, f or o");
     } else {
-      new User({ name, token, gender }).save((err, user) => {
+      new User({ name, token, gender, created }).save((err, user) => {
         if (err) {
           res.status(500).json({ error: "Failed to save to database" });
         } else {
           const { name, gender, _id } = user;
           userMq.sendToQueue(
             userTopic,
-            new Buffer(JSON.stringify({ name, token, gender, id: _id }))
+            new Buffer(JSON.stringify({ name, token, gender, id: _id, created }))
           );
           res.json({ userId: _id, token });
         }
@@ -186,7 +189,7 @@ export default (db, userMq) => {
               company_id: req.body.companyId,
               user_id: user._id
             }).exec((err, punches) => {
-              if (punches.length >= company.punchCount - 1) {
+              if (punches.length >= company.punchCount) {
                 Punch.updateMany(
                   {
                     company_id: req.body.companyId,
@@ -199,6 +202,14 @@ export default (db, userMq) => {
                       .status(500)
                       .json({ error: "Failed to update database" });
                   }
+                  discountMq.sendToQueue(discountTopic, new Buffer(JSON.stringify({
+                    user_id: user._id, // id of the user
+                    user_name: user.name, // name of the user
+                    company_id: company._id, // id of the company
+                    company_name: company.name, // name of the company
+                    punch_count: company.punchCount, // punchCount of the company
+                    created: moment(), // Date of the punch
+                    })));
                   res.json({ discount: true });
                 });
               } else {
@@ -213,6 +224,15 @@ export default (db, userMq) => {
                     res.status(500).json({ error: "Failed to create punch" });
                   }
                   const { user_id, company_id, created, used, _id } = punch;
+                  punchMq.sendToQueue(punchTopic, new Buffer(JSON.stringify({
+                    user_id, // id of the user
+                    user_name: user.name, // name of the user
+                    company_id: company._id, // id of the company
+                    company_name: company.name, // name of the company
+                    punch_count: company.punchCount, // punchCount of the company
+                    created: punch.created, // Date of the punch
+                    unused_punches: punches.length + 1 // How many unused punches user has at this company
+                    })));
                   res.statusCode = 201;
                   res.json({ punch_id: _id });
                 });

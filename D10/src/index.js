@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import app from "./api";
 import createProducer from "./producer";
-import { userTopic } from "./mqTopics";
+import {userTopic, punchTopic, discountTopic} from "./mqTopics";
 
 mongoose.Promise = global.Promise;
 const mongoConnection = mongoose.connect(
@@ -14,7 +14,9 @@ const mongoConnection = mongoose.connect(
 );
 
 const userProducer = createProducer(userTopic);
-Promise.all([mongoConnection, userProducer]).then(([db, userMq]) => {
-  const server = app(db, userMq);
+const PunchProducer = createProducer(punchTopic);
+const discountProducer = createProducer(discountTopic);
+Promise.all([mongoConnection, userProducer, PunchProducer, discountProducer]).then(([db, userMq, punchMq, discountMq]) => {
+  const server = app(db, userMq, punchMq, discountMq);
   server.listen(5001), () => console.log("Listening on port 5001");
 });
