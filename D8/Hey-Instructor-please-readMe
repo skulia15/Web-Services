@@ -1,0 +1,37 @@
+The project description asked for the consumer to write "User was added" etc and also return the json object with came with each event.
+Instead we wrote "User was added" and then wrote the contents of the json object in a structured manner. I hope that's fine.
+As we understood it the user is supposed to receive a discount when the number of punches he has received for a company exceeds the punchCount of that company.
+The variable "how many "unused" punches the user has at this company" we unserstood as the number of punches the user has collected at a company before receiving a discount
+
+To start the server use: yarn execute
+To start the consumer use: yarn consume
+To start the producer use: yarn produce
+
+
+To create a user you must provide the admin-token in the "Authorization" header field.
+You POST to route: localhost:5001/api/users
+	the admin-token is: 598d24f1-3d87-4a0d-980a-d00d461be53b
+	When creating a user you must provide a name and a gender:
+		User example:  
+		{
+	       "name": "Rick Sanchez",
+	       "gender": "m"
+		}
+
+To create a punch, first you will need to create a company. There you must also have the admin-token stated above.
+You POST to route: localhost:5001/api/companies
+	When creating a company you must provide a name and optionally a punchCount (defaults to 10).
+		Company example:
+		{
+	       "name": "Dimension C-137",
+	       "punchCount": 5
+	 	}
+To add a punch to a user for some company you need to provide 
+	- the token of the user you are about to create a punch for in the "Authorization" header.
+	- the id of the company you are about to add a punch to.
+You POST to route: localhost:5001/api/my/punches
+	Punch example:
+	{
+    	"companyId": "59f1f6e91ab8f71634a07514"
+	}
+
