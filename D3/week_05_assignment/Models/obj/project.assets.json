@@ -177,23 +177,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Skúli\\.nuget\\packages\\": {},
+    "C:\\Users\\Notandi\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Models\\Models.csproj",
+      "projectUniqueName": "c:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Web-Services\\D3\\week_05_assignment\\Models\\Models.csproj",
       "projectName": "Models",
-      "projectPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Models\\Models.csproj",
-      "packagesPath": "C:\\Users\\Skúli\\.nuget\\packages\\",
-      "outputPath": "C:\\Skúli\\Háskólinn í Reykjavík\\Web-Services\\D3\\week_05_assignment\\Models\\obj\\",
+      "projectPath": "c:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Web-Services\\D3\\week_05_assignment\\Models\\Models.csproj",
+      "packagesPath": "C:\\Users\\Notandi\\.nuget\\packages\\",
+      "outputPath": "c:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Web-Services\\D3\\week_05_assignment\\Models\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Skúli\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Notandi\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.0"
