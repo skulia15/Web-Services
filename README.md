@@ -272,3 +272,8 @@ called before each test in the class is
 executed.
 
 Each test method should have three sections
+* Arrange - this section makes the necessary arrangements for the test
+* Act - this section is usually just a single line, which executes the method being
+tested
+* Assert - this section asserts that all the post conditions are valid after the given
+method being tested has executed
