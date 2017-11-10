@@ -1,8 +1,0 @@
-/home/andri/GitHubProjects/webServices/Web-Services/D4/Models/bin/Debug/netstandard2.0/Models.deps.json
-/home/andri/GitHubProjects/webServices/Web-Services/D4/Models/bin/Debug/netstandard2.0/Models.dll
-/home/andri/GitHubProjects/webServices/Web-Services/D4/Models/bin/Debug/netstandard2.0/Models.pdb
-/home/andri/GitHubProjects/webServices/Web-Services/D4/Models/obj/Debug/netstandard2.0/Models.csproj.CoreCompileInputs.cache
-/home/andri/GitHubProjects/webServices/Web-Services/D4/Models/obj/Debug/netstandard2.0/Models.AssemblyInfoInputs.cache
-/home/andri/GitHubProjects/webServices/Web-Services/D4/Models/obj/Debug/netstandard2.0/Models.AssemblyInfo.cs
-/home/andri/GitHubProjects/webServices/Web-Services/D4/Models/obj/Debug/netstandard2.0/Models.dll
-/home/andri/GitHubProjects/webServices/Web-Services/D4/Models/obj/Debug/netstandard2.0/Models.pdb
