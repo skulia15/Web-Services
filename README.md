@@ -277,3 +277,27 @@ Each test method should have three sections
 tested
 * Assert - this section asserts that all the post conditions are valid after the given
 method being tested has executed
+
+## Validating models
+Can use: System.ComponentModel.DataAnnotations
+
+Data annotations has a range of attributes to decorate properties of model
+classes such as:
+* MinLength / MaxLength
+* Range
+* RegularExpression
+* Display / DisplayFormat
+* DataType
+* Required
+* Compare
+
+We can make the fields that
+have a default value that isn´t
+null nullable! We do that by
+adding a question mark at the
+end of the dataType.
+* By doing this they will receive a default value of
+null if they aren´t present in the model that is
+sent in with the POST request
+
+## Exceptions
