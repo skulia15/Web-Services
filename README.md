@@ -300,4 +300,214 @@ end of the dataType.
 null if they aren´t present in the model that is
 sent in with the POST request
 
-## Exceptions
+## Globalization and Localization
+**Globalization** is the process of designing applications that support different cultures
+
+**Localization** is the process of customizing an application for a given culture
+
+**Internationalization** involves Globalization and Localization
+
+accept-language
+
+ASP.NET keeps track of two culture values
+* Culture
+* UICulture
+
+The culture value determines the results of culture-dependent functions, such as the date, number, and currency formatting
+
+The UICulture determines which resources are to be loaded for the page by the ResourceManager. The ResourceManager simply looks up culture-specific resources that is determined by CurrentUICulture. 
+
+Every thread in .NET has CurrentCulture and CurrentUICulture objects. So ASP.NET inspects these values when rendering  culture-dependent functions
+
+Every HTTP request has a header field called Accept-Language which determines which languages the user's browser supports
+
+Accept-Language: en-us,en;q=0.5
+* This means that the browser prefers English (United States english), but it can accept other types of English.
+* The "q" parameter indicates an estimate of the user's
+preference for that language. You can control the list of languages using your web browser.
+
+Should the server side code provide the globalization or should the client code take care if it?
+* A common approach is for the server side code to only return a single language and
+then the client side code takes care of the globalization
+*  example of this is a website that has multiple language options. Then the server would send some string constants in one language and the frontend code (usually javascript) will take care of “translating” it
+
+Culture: It is a language and, optionally, a region.
+
+Locale: A locale is the same as a culture
+
+Neutral culture: A culture that has a specified language, but not a region (e.g. "en", "es")
+
+Specific culture: A culture that has a specified language and region. (e.g. "enUS", "en-GB", "es-CL")
+
+Access language headers with: 
+* var languageheader = Request.Header["Accept-Language"];
+
+## Paging
+How to implement paging?
+* We can use linq to create paging:
+
+Instead of returning a list of
+records it is common to
+create an Envelope class
+
+An Envelope class usually
+contains a list of some data
+and information about the
+paging options 
+
+Return an Envelope containing:
+* Items: What we are going to display
+* Total pages: Amount of pages we are able to display
+* Page Size: how many records will be shown on each page
+* Current Page: page we are displaying, we get this as a parameter
+
+The HTTP requests access our API via the controllers so the controllers must also accept parameters for the pagenumber and pagesize
+ 
+ We can get these parameters from a query that follows the route
+
+* Example: /api/records?pageNumber=2&pageSize=15
+    * The question mark denotes the start of the query
+    * The ampersand denotes another query parameters
+
+## Authentication
+
+OAuth
+* Login with facebook ,twitter etc.
+
+Two types of clients:
+* Silicon based clients: application(browser/app)
+* Carbon based client: Carbon based is a the person working on the silicon based client
+
+A good idea would be to have a single service (API)
+that takes care of user authentication. 
+* They are often called STS(security token service)
+
+## Security
+SQL injection
+
+Cross-site scripting
+
+CSRF (See-surf)
+* The user has already visited a page A which has a CSRF vulnerability
+* The user visit another page B which tries to exploit that vulnerability
+* Page B contains code which tries to issue a request to page A, thereby performing actions on behalf of the current user, without that user knowing about it.
+
+Security Misconfiguration
+*  when an attacker can access unprotected files, default
+accounts etc. to gain unauthorizes access to the system
+
+## Caching
+
+Caching helps to enhance speed by temporarily storing data - either on the client
+or on the server - so that future requests to that same data can be served faster. 
+
+Caching can be done on the client or on the server
+
+The browser caches html, css, js and data but how can we  know that the data in the cache is still valid?
+
+#### Etags
+When a client makes a request to an api the api will mark its responses with an ETag
+*  Etag is basically a hashed string
+* It is a unique identifier for web caching validation.
+* This key represents a resource (URL), if the resource changes then a new Etag is issued for that resource
+
+"If-None-Match" Header
+* if provided: the server will then compare the Etag with
+the resource requested and if they match, the cached content will be returned together with a 304 HTTP response (Not modified).
+
+if we wanted to issue a PUT/PATCH request we would have
+to include the "If-Match" header!
+
+When the API recieves the request it will check if the Etag is valid
+* If the etag is valid then the server will not send any data with the response but only the status code 304. That basically means that the data the client has in it´s cache memory is still valid and can be used
+
+IMemoryCache
+
+Apps which run on multiple servers should ensure that sessions are sticky
+when using the in-memory cache
+* Sticky sessions ensure that subsequent requests from a client all go to the same
+server
+* Non-sticky sessions require a distributed cache to avoid cache consistency
+problem
+
+# Javascript - Node.js
+JavaScript is described as a loosely- and dynamically typed scripting language
+which can be used within different environments
+
+When we declare a variable, write a literal
+or construct an expression, the type is inferred. 
+
+JavaScript is loosely typed. Thus, the type of a given variable can be changed after being defined.
+
+## var
+The problem with var:
+* When declaring a variable with var you are stating that  the scope of that variable will be hoisted
+
+let and const were introduced with ES6
+* You should always consider using let or const instead of var
+
+## const
+pointers of const variables cannot be changed – you can
+however change the object it is pointing to
+
+## NodeJS 
+
+is single threaded
+
+to do synchronous,
+concurrent programming we need to use things like callbacks, Promises or event handlers.
+
+## let vs const vs var
+var has no scoping, therefore declaring a variable with the same name will override the previous value.
+
+let works the same way as var, except it has lexical scoping. Therefor this example won’t override the global version of foo.
+
+Const in javascript is not like the const you are used to in C or C++. In javascript const follows the same scoping rules as let
+
+All numbers in Javascript are represented as floats.
+
+## ES6 Features
+
+Arrow functions
+* semantically different from regular functions when
+dealing with the scope of *this*.
+
+Classes
+
+Object spread
+
+Object destructuring
+
+Template strings
+
+Comparison
+*  == does it’s best to find a way to similarity.
+* === is strict equality which matches both type and value
+
+## Express 
+Middleware based routing framework
+
+## Databases
+
+Document based datastore
+
+Does not require tables and schemas
+
+Stores data as JSON (or similar)
+
+Can be one big blob
+
+Can use tables and schemas
+
+Can be used exactly like SQL
+
+Usually not ACID compliant (Atomicity, Consistency,
+Isolation, Durability)
+
+MongoDB driver
+* Low level API
+* No modeling
+
+Mongoose
+*  Higher level API
+* Defines schemas to work with - SQL-like
