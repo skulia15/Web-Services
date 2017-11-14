@@ -865,6 +865,119 @@ When a HTTP request is issued to a web service, which method should be used to i
 Answer: Add an "Accept-Language" HTTP header to the request 
 
 -------------
+The main purpose of a unit test is to:
+* Test business logic 
+* Test that the mapping between entity classes and database tables is correct 
+* Test the integration between all parts of the system, i.e. Web API layer, business logic layer, and database layer
+* Test routing in the Web API layer 
+* Test DTO and ViewModel classes 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer:  Test business logic 
+
+-------------
+
+For a unit test method to be recognized as such by MSTest, it must meet certain qualifications. Which one? 
+* The method must have three sections: Arrange, Act and Assert 
+* The method must be marked with the [Fact] attribute, and there must be a constructor in the class which contains common setup code
+* The method must be marked with the [TestMethod] attribute 
+* The method must either be marked using the [Fact] attribute, or the [TestMethod] attribute
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: The method must be marked with the [TestMethod] attribute 
+
+-------------
+
+What should happen in the "Arrange" section in a unit test?
+* It should call the method being tested 
+* Nothing, it should all happen in the method marked as [TestInitialize] 
+* It should throw an exception if the unit test expects one 
+* It should set up the necessary test data 
+* It should check that the result of calling a given method in the system under test meets the expectations
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: It should set up the necessary test data 
+
+-------------
+
+What should happen in the "Act" section in a unit test?
+* It should call the method being tested 
+* It should set up the necessary test data 
+* It should check that the result of calling a given method in the system under test meets the expectations
+* It should catch an exception if the system under test is expected to throw such an exception
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: It should call the method being tested 
+
+-------------
+
+What should happen in the "Assert" section in a unit test?
+
+* It should set up the necessary test data 
+* Nothing, it should all happen in the method marked as [TestInitialize] 
+* It should call the method being tested 
+* It should throw an exception if the unit test expects one 
+* It should check that the result of calling a given method in the system under test meets the expectations
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer:  It should check that the result of calling a given method in the system under test meets the expectations
+
+-------------
+
+Why would we want to make us of caching in our web services?
+* because it is faster than a database and we won´t need a database if we have caching 
+* We would want to use caching because it is a depency injection framework and depency injection is crusial when writing loosely coupled code
+* To make our webservice faster 
+* We wouldn´t want to use caching. It has no benefits at all 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: To make our webservice faster 
+
+-------------
+
+To ensure that a method is properly tested, we need to:
+* a) Test that the return value of the method is what is expected given its input 
+* b) Test that any side effects (such as updating a record in a table) did in fact happen 
+* c) Test that if the method has side effects (such as updating a record in a table), only the intended records were affected, and not others (i.e. only those records which were supposed to be updated should have changed, and not any others)
+* a), b) and c) 
+* Both a) and c) 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: a), b) and c) 
+
+-------------
+
+Temp
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: 
+
+-------------
+
 Temp
 <br>
 <br>
