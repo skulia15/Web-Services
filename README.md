@@ -511,3 +511,366 @@ MongoDB driver
 Mongoose
 *  Higher level API
 * Defines schemas to work with - SQL-like
+
+# Quizes
+Which of the following is generally considered to have defined the REST concept?
+* Douglas Crockford 
+* Misko Hevery 
+* Roy Fielding 
+* Leonard Richardsson 
+
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer:  Roy Fielding
+
+------------
+
+A full-blown REST service has the following characteristics, except for one. Which one is NOT considered one of the main characteristics of a REST service?
+
+* Hypertext driven 
+* Cacheable 
+* JSON data format 
+* Client/Server architecture 
+* Stateless 
+
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: JSON data format 
+
+---------------
+
+A web service with a single URL which only accepts a HTTP POST request, receives input on XML format and returns XML is probably a:
+* Ruby on Rails project 
+* SOAP service 
+* Classic ASP project 
+* REST service 
+
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: SOAP service 
+
+---------------
+
+A REST service for a Learning Management System has received a HTTP POST request, to create a new instance of a course. What is the most logical status code returned from the service, assuming the course instance can be properly created?
+* 200 
+* 204 
+* 201 
+* 404
+
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: 201
+
+---------------
+
+What is the preferred method when requesting data in a given format from a web service?
+* To put it in the HTTP footer 
+* Specify the content-type in the "Accept" HTTP header: Accept: application/json 
+* To put it in the query string: http://server/api/courses?format=json 
+* To put it in the URL: http://server/api/courses/json 
+* To put it in the body of the HTTP request 
+
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: Specify the content-type in the "Accept" HTTP header: Accept: application/json 
+
+-------------
+ 
+Assume we want to support the given URL in our Web API:
+
+/api/courses/123/assignments/234
+
+where 123 is the integer ID of the course in question, and 234 is the integer ID of a given assignment in that course.
+
+What is the MOST correct way - using Attribute routing - to decorate a method in a Web API Controller such that it supports this URL?
+
+* Route["/api/courses/{courseID}/assignments/{assignmentID:string}]"
+
+* RoutePrefix["/api/courses/123/assignments/234"]
+
+* RoutePrefix["/api/courses/{courseID:int}/assignments/{assignmentID:int}] 
+
+* Route["/api/courses/{courseID:int}/assignments/{assignmentID:int}]" 
+
+* RoutePrefix["/api/courses/{courseID:int}/assignments/{assignmentID:string}] 
+
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: Route["/api/courses/{courseID:int}/assignments/{assignmentID:int}]"
+
+-------------
+
+
+What is the proper status code for a endpoint that handles HTTP DELETE requests?
+
+* 418
+* 400
+* 204 
+* 201 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: 204
+
+-------------
+
+Which of the following is NOT among the methods used for versioning of Web APIs?
+* Adding the version to the MIME type being reqested via the "Accept" header. 
+* Adding a custom header to the request. Example: "api-version: 1" 
+* Adding the version to a cookie. Example: "Version: v1" 
+* Adding the version to the URL. Example: /api/v1/courses 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: Adding the version to a cookie. Example: "Version: v1" 
+
+-------------
+
+If an ASP.NET Core Web API application wants to ensure that the response to a given request will contain status code 200, which of the following methods will do that?
+
+* Declare the method as returning an object (or a list of objects), and then return such object(s).
+* All other options are correct 
+* Use IActionResult, and then return StatusCode(200, obj); 
+* Use IActionResult, and then return new ObjectResult(obj); 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: All other options are correct 
+
+-------------
+
+What would be the correct status code returned from an API method, if the client issues a request for /api/courses/9999, but there is no course with ID = 9999?
+
+* 204
+* 404 
+* 500 
+* 400 
+* 303 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: 404
+
+-------------
+
+Under what circumstances should an API method return HTTP status code 401?
+
+* When the client HAS provided authentication data, but the given user doesn´t have permission to perform the given action
+* When the client has issued a request for a method which doesn´t return any content, such as a DELETE method
+* When the client has made some unspecified mistake in the request, i.e. could be a missing property value when creating a resource
+* When the server is a teapot
+* When the client has not provided any authentication data, but the method requires it 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: When the client has not provided any authentication data, but the method requires it
+
+-------------
+
+A DTO class (Data Transfer Object) is a class which:
+
+* is used to pass data from the web service to its clients 
+* is used for validation of input from clients 
+* contains the application business logic 
+* maps to a database table 
+* are used to pass data from clients to the web service 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: is used to pass data from the web service to its clients
+
+-------------
+
+Entity objects are classes which:
+* contain the application business logic
+* map to database tables 
+* are used to pass data from the web service to its clients 
+* are used for validation of input from clients 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: map to database tables 
+
+-------------
+Which of the following most correctly describes a service provider class?
+* contains validation attributes on its properties 
+* contains the application business logic 
+* maps to a database table 
+* handles all exceptions in the application and takes care of returning the correct status code
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: contains the application business logic
+
+-------------
+What support for different MIME types does ASP.NET Core Web API provide?
+* It can return both JSON and XML, and allows adding support for other types (CSV, iCal, etc.) via custom formatters
+* It can return both JSON and XML, but nothing else 
+* It can return only JSON 
+* It can return only XML 
+* It has built in support for all known MIME types in the universe 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: It can return both JSON and XML, and allows adding support for other types (CSV, iCal, etc.) via custom formatters
+
+-------------
+
+Which of the following LINQ methods will return a single item in a collection/table, null if no item is found, but will throw an exception if more than one is found?
+
+* FirstOrDefault() 
+* First() 
+* SingleOrDefault() 
+* Take(1) 
+* Single() 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: SingleOrDefault() 
+
+-------------
+Which of the following LINQ methods will NOT materialize a query?
+* SingleOrDefault() 
+* Count() 
+* ToList() 
+* Min() 
+* OrderBy() 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: OrderBy() 
+
+-------------
+
+_courses is a variable of type IRepository<Course>. What meaning does the "I"  in the beginning of the type IRepository have?
+* It means that the type IRepository is a regular poco class 
+* It has no meaning whatsoever
+* It means that it will be mapped using IAutoMapper
+* It indicates that the type IRepository is an interface 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer:  It indicates that the type IRepository is an interface 
+
+-------------
+AutoMapper is created to solve a particular problem. Which one?
+
+* It allows us to inject dependencies into our application 
+* It simplifies mapping between entity classes and database tables 
+* It simplifies mapping between entity classes and DTO classes 
+* It makes it easier to declare test instances of data in unit tests 
+* It simplifies mapping between the business layer and the Web API layer 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: It simplifies mapping between entity classes and DTO classes
+
+-------------
+What is the purpose of the attribute [TestInitialize] ?
+* It means that a new instance of the class that is decorated with this attribute will be created before each unit test is run
+* It means that the method that is decorated with this attribute is a unit test 
+* There is no attribute called [TestInitialize]
+* It means that the method that is decorated with this attribute will run before each unit test
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: It means that the method that is decorated with this attribute will run before each unit test
+
+-------------
+Which LINQ keyword can help us implementing a query which uses LEFT JOIN?
+* into 
+* where 
+* select 
+* equals 
+* orderby 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: into 
+
+-------------
+When implementing paging in ASP.NET Web API using the Entity Framework, two particular LINQ methods can help us to load a given page from a large list of items. Which two methods are those?
+* Skip() / Take() 
+* First() / Top() 
+* Skip() / Top() 
+* First() / Next() 
+* First() / Take() 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: Skip() / Take()
+
+-------------
+When a HTTP request is issued to a web service, which method should be used to indicate what (human) language the response is preferred to be in (if applicable)?
+* The client has no way to indicate what language is preferred 
+* Add a "lang" parameter to the query string: path/to/web/service?lang=is 
+* Add a JSON object to the request body: { "lang" : "is" } 
+* Add an "Accept-Language" HTTP header to the request 
+* Put the language into the URL: /path/to/web/service/lang/is 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: Add an "Accept-Language" HTTP header to the request 
+
+-------------
+Temp
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: 
+
+-------------
