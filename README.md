@@ -968,22 +968,125 @@ Answer: a), b) and c)
 
 -------------
 
-Temp
+One of the following statements about Node.js is wrong. Which one?
+
+* Node.js was created by Ryan Dahl 
+* A Node.js application is single-threaded 
+* Node.js uses Google V8 behind the scenes 
+* Node.js programs runin the browser 
 <br>
 <br>
 <br>
 <br>
 <br>
-Answer: 
+Answer: Node.js programs run in the browser
 
 -------------
 
-Temp
+Express provides various services to make it easier to write web applications. 
+Below is a list of various services,
+Express implements one of those (without the use of any plugins). Which one?
+* Routing 
+* XML serialization of objects 
+* Connection to ElasticSearch servers 
+* Unit testing 
 <br>
 <br>
 <br>
 <br>
 <br>
-Answer: 
+Answer: Routing
 
 -------------
+
+In ES6, arrow functions differ from regular functions. Which one of the differences listed below is correct?
+* Arrow functions are always asynchronous, while regular functions are always synchronous
+* We can use the "const" keyword inside arrow functions, but not inside regular functions 
+* The "this" keyword has different meaning in arrow functions than in regular functions 
+* There is no closure created for arrow functions 
+* Arrow functions can take optional parameters, but regular functions cannot 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: The "this" keyword has different meaning in arrow functions than in regular functions
+
+-------------
+
+What is the difference between the keywords "var" and "let" in ES6?
+* "var" is non-typesafe, but "let" is typesafe 
+* "var" creates a new scope, but "let" doesn´t 
+* "var" uses function scope, but "let" uses block scope 
+* "var" creates a closure object, but "let" doesn´t 
+* "var" is considered harmful, but "let" is not 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: "var" uses function scope, but "let" uses block scope 
+
+-------------
+
+We can tell Express to use middleware in our apps.
+Assuming that "app" is our Express app, and "m" is a reference to our middleware 
+(either 3rd party or our own). How is that middleware registered?
+* app.express(m) 
+* app(use(m)) 
+* app.middleware(m); 
+* app.use(m => { res, req }); 
+* app.use(m) 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: app.use(m) 
+
+-------------
+
+Assume we´ve got an Express app with a route
+that should return HTTP Status code 412 under a given circumstances. 
+Which of the methods below will do that?
+* res.error(412); 
+* res.send(412); 
+* res.throw(412); 
+* res.status(412); 
+* res.fail(412); 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: res.status(412); 
+
+-------------
+
+What service does Mongoose provide us, which is not provided out of the box by MongoDB?
+* It allows us to export the table definitions, such that they can be declared in one file, but used in another 
+* Indexing on certain columns 
+* Automatic cleanup of unused tables 
+* It adds a number of datatypes not supported directly by Mongo 
+* Schema definitions and validation 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: Schema definitions and validation 
+
+-------------
+
+When using RabbitMQ, what do we call the code which receives messages from a message queue?
+* Listener 
+* Producer 
+* Performer 
+* Consumer 
+* Receiver 
+<br>
+<br>
+<br>
+<br>
+<br>
+Answer: Consumer 
